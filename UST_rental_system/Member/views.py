@@ -52,7 +52,7 @@ def login(request):
                 #要改成跳頁
 
                 #email=request.session.get(email)
-                request.session['email']='999999'
+                request.session['email']=email
                 request.session.modified = True
                 return redirect('/member/home-nu/',email=email)
                 return HttpResponse(email)
@@ -67,7 +67,7 @@ def login(request):
 
 def index(request):
     context = {}
-    request.session.get(email)
+    email=request.session['email']
     return render(request, 'home-nu.html', context)
     return redirect('home-nu.html')
 
