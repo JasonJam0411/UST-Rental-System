@@ -24,7 +24,7 @@ MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEMBER__DIR = Path.joinpath(BASE_DIR,'Member')
 MEMBER_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Member/template') #登入、註冊
-RENTAL_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Rental/template') 
+RENTAL_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Rental/template')
 #print(TAMPLATE_DIR)
 
 # Quick-start development settings - unsuitable for production
@@ -91,11 +91,11 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ust_rental_system', # 資料庫名字
+        'NAME': 'ust-1215', # 資料庫名字
         'USER': "root",  # mysql 使用者名稱稱
-        'PASSWORD': 'Aa980411',  # 資料庫的密碼
-        'HOST': "127.0.0.1",  # 資料庫服務地址， 這裡我們是測試開發 填本地地址 
-        'PORT': 3306,   # mysql 對應的埠號 
+        'PASSWORD': '871221',  # 資料庫的密碼
+        'HOST': "127.0.0.1",  # 資料庫服務地址， 這裡我們是測試開發 填本地地址
+        'PORT': 3306,   # mysql 對應的埠號
         'default-character-set': "UTF8",  # 設定編碼規則 utf8
     }
 }

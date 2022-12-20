@@ -4,10 +4,13 @@ from .forms import MemberModelForm, LoginModelForm
 from .models import Member
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
+from django.contrib.sessions.models import Session
 
 
 # Create your views here.
-
+def index(request):
+    return HttpResponse("B站首页")
 
 def register(request):
     form = MemberModelForm()
@@ -20,7 +23,7 @@ def register(request):
             form.save()
             context['successful_submit']=True
             #return redirect('register')
-    
+
     context['form']=form
 
     return render(request, 'register.html', context)
@@ -47,14 +50,26 @@ def login(request):
                 }
                 messages.success(request, "登入成功")
                 #要改成跳頁
+
+                #email=request.session.get(email)
+                request.session['email']='999999'
+                request.session.modified = True
+                return redirect('/member/home-nu/',email=email)
+                return HttpResponse(email)
                 return HttpResponseRedirect(request.path_info)
 
             else:
                 messages.error(request, "email或密碼輸入錯誤")
                 return HttpResponseRedirect(request.path_info)
-    
+
     context['form']=form
-    return render(request, 'login.html', context)            
+    return render(request, 'login.html', context)
+
+def index(request):
+    context = {}
+    request.session.get(email)
+    return render(request, 'home-nu.html', context)
+    return redirect('home-nu.html')
 
 
-    
+
