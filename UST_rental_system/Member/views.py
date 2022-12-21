@@ -39,17 +39,21 @@ def login(request):
             if Member.objects.filter(email=email, password=password).exists():
 
                 #GET Member的name和identity
-                member_data = Member.objects.filter(email=email, password=password).values("name","identity")
+                member_data = Member.objects.filter(email=email, password=password).values("id","name","identity")
+                
+                id = member_data[0]["id"]
                 name = member_data[0]["name"]
                 identity = member_data[0]["identity"]
-
+                
+                #存入session
+                request.session['id'] = id
                 request.session['email'] = email
                 request.session['name'] = name
                 request.session['identity'] = identity
                 
                 #一般使用者登入跳轉到home_member.html
                 if identity == 1:
-                    return redirect('/rental/member_search_site/')
+                    return redirect('/rental/search_site/')
                 
                 #缺場材管理、系統管理登入URL
                 else:

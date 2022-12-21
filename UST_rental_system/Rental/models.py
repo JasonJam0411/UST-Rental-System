@@ -1,5 +1,5 @@
 from django.db import models
-from Member.models import School
+from Member.models import School, Member
 
 class Department(models.Model):
     id = models.IntegerField(db_column='id', primary_key=True)
@@ -43,4 +43,15 @@ class Duration(models.Model):
     
     class Meta:
         db_table = 'duration'
+        managed=False
+
+class Rent_Site(models.Model):
+    id = models.IntegerField(db_column='id', primary_key=True)
+    date = models.DateField(db_column='date')
+    status = models.IntegerField(db_column='status')
+    timestamp = models.DateTimeField(db_column='timestamp', max_length=45)
+    member_id= models.ForeignKey(Member, db_column='member_id', on_delete=models.CASCADE)
+    duration_id= models.ForeignKey('Duration', db_column='duration_id', on_delete=models.CASCADE)
+    class Meta:
+        db_table = 'rent_site'
         managed=False

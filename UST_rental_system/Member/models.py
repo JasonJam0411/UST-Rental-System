@@ -21,7 +21,6 @@ class School(models.Model):
 
 class Member(models.Model):
     id = models.IntegerField(db_column='id', primary_key=True)
-    member_id = models.CharField(db_column='member_id', max_length=45)
     name = models.CharField(db_column='name', max_length=45)
     identity = models.CharField(db_column='identity', max_length=45)
     sex = models.CharField(db_column='sex', max_length=45)

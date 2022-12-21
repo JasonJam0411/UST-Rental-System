@@ -1,9 +1,28 @@
 {% extends 'home_member.html' %}
 
+{% block title %}
+場地預約
+{% endblock %}
+
 {% block content %}
 
-<section id="intro">
-    <div class='jumbotron'  style="background-color:#E9E9D8 ;">
+        <!-- 預約場地成功/失敗Alert BEGIN -->
+        <div class="container">
+            {% if messages %}
+                <div class="row">
+                    <div class="">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            <p>{{ message }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <!-- 預約場地成功/失敗Alert END -->
+
+        <!-- 顯示預約場地內容 BEGIN -->
         <div class="container" style="background-color:#f3f3eb ;">
             <div class="row">
                 <div class="col-md-12 text-center">
@@ -11,20 +30,37 @@
                     <br>
                 </div>
             </div>
-            <div class="row">
-                <p style="font-size: 30px;">租借名稱:運動中心一樓籃球C場</p>
-                <p style="font-size: 30px;">學校:中央大學</p>
-                <p style="font-size: 30px;">位置:中央大學</p>
-                <p style="font-size: 30px;">地址:320桃園市中壢區中大路300號</p>
-                <p style="font-size: 30px;">租借日期:2022-12-4</p>
-                <p style="font-size: 30px;">租借時間:8:00-9:00</p>
-                <p style="font-size: 30px;">租借費用:$20</p>
-            </div>
-            <div class="col-md-12 text-center">
-                <button  class="btn" onclick="show_confirm()">確定租借</button>
-            </div>
+            {% for obj in reserve_site_duration %}
+                <div class="row">
+                        <p style="font-size: 30px;">租借名稱: {{obj.site_id.name}}</p>
+                        <p style="font-size: 30px;">學校: {{obj.site_id.department_id.school_id.name}}</p>
+                        <p style="font-size: 30px;">位置: {{obj.site_id.location}}</p>
+                        <p style="font-size: 30px;">地址: {{obj.site_id.address}}</p>
+                        <p style="font-size: 30px;">租借日期: {{obj.date}}</p>
+                        <p style="font-size: 30px;">租借時間: {{obj.start}}:00-{{obj.end}}:00</p>
+                        <p style="font-size: 30px;">租借費用: {{obj.site_id.price}}</p>
+                        <p style="font-size: 30px;">場地管理單位: {{obj.site_id.department_id.name}}</p>
+                        <p style="font-size: 30px;">場地管理員: {{obj.site_id.department_id.manager}}</p>
+                        <p style="font-size: 30px;">電話: {{obj.site_id.department_id.tel}}</p>
+                        <p style="font-size: 30px;">繳費地點: {{obj.site_id.department_id.address}}</p>
+                </div>
+                <div class="col-md-12 text-center">
+                    {% if not successful_submit %}
+                    <form  action="{% url 'rental:reserve_site' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="reserve_site_duration_id" value="{{obj.id}}" />
+                        <input class="btn btn-primary" type="submit" value="確定租借" />
+                    </form>
+                    {% endif %}
+                    {% if successful_submit %}
+                    <form  action="{% url 'rental:back_to_index' %}" method="POST">
+                        {% csrf_token %}
+                        <input class="btn btn-success" type="submit" value="回到場地查詢" />
+                    </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
         </div>
-    </div>
-</section>
+        <!-- 顯示預約場地內容 END -->
 
 {% endblock  %}

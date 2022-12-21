@@ -7,7 +7,7 @@ class SchoolAdmin(admin.ModelAdmin):
     ordering = ['id']
 
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ('id','member_id','name','identity','sex','birthday','tel','email','password','image','school_id')
+    list_display = ('id','name','identity','sex','birthday','tel','email','password','image','school_id')
     ordering = ['id']
 
 # Register your models here.

@@ -1,5 +1,9 @@
 {% extends 'home_member.html' %}
 
+{% block title %}
+場地查詢
+{% endblock %}
+
 {% block content %}
 
         <div class="container">
@@ -13,18 +17,14 @@
                         <option value="3">國立清華大學</option>
                         <option value="4">國立政治大學</option>
                     </select>
-                <br>
                 <h2>用途</h2>
                     <select class="sel" name="usage" style="font-size: 25px;">
                         <option value="運動">運動</option>
                         <option value="會議">會議</option>
                     </select>
-                <br>
                 <h2>選擇日期</h2>
                     <input class="form-control me-2" type="date" id="date_info_s"  aria-label="Search" name="date" Required>
-                <br>
                 <h2>選擇時間</h2>
-                <br>
                 <div style='float: left; margin-right:25px;'>
                         <p style='margin-right:15px;'>開始時間</p>
                         <select class="sel" name="start" style="font-size: 20px;">
@@ -64,21 +64,19 @@
 
             {% for obj in condition_query_set %}
                 {% ifchanged %}
-                    <div class="row">
-                        <div class="col" style="display:flex ;  margin-right : 50px;">
-                                <div class="left" >
-                                    <img src=/static/{{ obj.site_id.image }} height="300"  width="400">
-                                </div>
-                        </div>
-                        <div class="col" style="display:flex ;  margin-right : 50px;">
-                            <div class="right" >
-                                <h1>{{obj.site_id.name}}</h1>
-                                <h4>位置:{{obj.site_id.location}}</h4>
-                                <h4>用途:{{obj.site_id.usage}}</h4>
-                                <h4>價錢:{{obj.site_id.price}} /小時</h4>
-                                <h4>地址:{{obj.site_id.address}}</h4>
-                                <br>
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#durationSelect{{obj.site_id.id}}" aria-expanded="false" aria-controls="durationSelect{{obj.site_id.id}}">預約</button>
+                    <div class="container">
+                        <div class="card flex-row flex-wrap">
+                            <div class="card-header">
+                                <img src=/static/{{ obj.site_id.image }} height="300"  width="400">
+                            </div>
+                            <div class="card-block" style="margin-left : 2%">
+                                    <h1>{{obj.site_id.name}}</h1>
+                                    <h4>位置:{{obj.site_id.location}}</h4>
+                                    <h4>用途:{{obj.site_id.usage}}</h4>
+                                    <h4>價錢:{{obj.site_id.price}} /小時</h4>
+                                    <h4>地址:{{obj.site_id.address}}</h4>
+                                    <br>
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#durationSelect{{obj.site_id.id}}" aria-expanded="false" aria-controls="durationSelect{{obj.site_id.id}}">預約</button>
                             </div>
                         </div>
                     </div>
@@ -88,7 +86,7 @@
                         <div class="card card-body container" style="display:inline">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rentalRule{{obj.id}}">{{obj.start}}:00-{{obj.end}}:00</button>
                         </div>
-                        <!-- 註冊成功MODAL BEGIN -->
+                        <!-- 閱讀租借規則MODAL BEGIN -->
                             <div class="modal fade" id="rentalRule{{obj.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -103,15 +101,16 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                        <form  action="{% url 'member:logout' %}" method="POST">
+                                        <form  action="{% url 'rental:display_reserve_site' %}" method="POST">
                                             {% csrf_token %}
+                                            <input type="hidden" name="reserve_site_duration_id" value="{{obj.id}}" />
                                             <input class="btn btn-primary" type="submit" value="確定預約" />
                                         </form>
                                     </div>
                                 </div>
                                 </div>
                             </div>
-                        <!-- 註冊成功MODAL END -->
+                        <!-- 閱讀租借規則MODAL END -->
                     </div>
                 </div>
     
