@@ -1,4 +1,4 @@
-{% extends 'home.html' %}
+{% extends 'home_member.html' %}
 
 {% block content %}
 
@@ -64,21 +64,61 @@
 
             {% for obj in condition_query_set %}
                 {% ifchanged %}
-                    <h3>{{obj.site_id.name}}</h3>
-                    {{obj.site_id.usage}}<br/>
-                    {{obj.site_id.price}}<br/>
-                    {{obj.site_id.rule}}<br/>
+                    <div class="row">
+                        <div class="col" style="display:flex ;  margin-right : 50px;">
+                                <div class="left" >
+                                    <img src=/static/{{ obj.site_id.image }} height="300"  width="400">
+                                </div>
+                        </div>
+                        <div class="col" style="display:flex ;  margin-right : 50px;">
+                            <div class="right" >
+                                <h1>{{obj.site_id.name}}</h1>
+                                <h4>位置:{{obj.site_id.location}}</h4>
+                                <h4>用途:{{obj.site_id.usage}}</h4>
+                                <h4>價錢:{{obj.site_id.price}} /小時</h4>
+                                <h4>地址:{{obj.site_id.address}}</h4>
+                                <br>
+                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#durationSelect{{obj.site_id.id}}" aria-expanded="false" aria-controls="durationSelect{{obj.site_id.id}}">預約</button>
+                            </div>
+                        </div>
+                    </div>
                 {% endifchanged %}
-            
-            
-                {{obj.id}}<br/>
-                {{obj.date}}<br/>
-                {{obj.start}}<br/>
-                {{obj.end}}<br/>
-
+                <div class="container" style="margin-top : 50px ; margin-bottom : 50px; ">
+                    <div class="collapse multi-collapse" id="durationSelect{{obj.site_id.id}}" >
+                        <div class="card card-body container" style="display:inline">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rentalRule{{obj.id}}">{{obj.start}}:00-{{obj.end}}:00</button>
+                        </div>
+                        <!-- 註冊成功MODAL BEGIN -->
+                            <div class="modal fade" id="rentalRule{{obj.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h2 class="modal-title" id="exampleModalLongTitle">請詳細閱讀租借規則!</h2>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{obj.site_id.rule}}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                        <form  action="{% url 'member:logout' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input class="btn btn-primary" type="submit" value="確定預約" />
+                                        </form>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        <!-- 註冊成功MODAL END -->
+                    </div>
+                </div>
+    
             
             {% endfor %}
           
         </div>
+
 
 {% endblock  %}

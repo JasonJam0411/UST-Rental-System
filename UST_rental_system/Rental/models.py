@@ -20,10 +20,10 @@ class Site(models.Model):
     name = models.CharField(db_column='name', max_length=45)
     usage = models.CharField(db_column='usage', max_length=45)
     price = models.IntegerField(db_column='price')
-    rule = models.DateField(db_column='rule',max_length=45)
-    picture = models.CharField(db_column='picture', max_length=45)
-     
-    
+    rule = models.DateField(db_column='rule',max_length=200)
+    image = models.CharField(db_column='image', max_length=45)
+    address = models.CharField(db_column='address', max_length=45)
+    location = models.CharField(db_column='location', max_length=45)
     department_id = models.ForeignKey('Department', db_column='department_id', on_delete=models.CASCADE)
     
     # def __str__(self):

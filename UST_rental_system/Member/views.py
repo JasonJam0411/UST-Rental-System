@@ -25,7 +25,7 @@ def register(request):
 
     return render(request, 'register.html', context)
 
-# 會員登入
+#登入
 @csrf_exempt
 def login(request):
     form = LoginModelForm()
@@ -40,15 +40,24 @@ def login(request):
 
                 #GET Member的name和identity
                 member_data = Member.objects.filter(email=email, password=password).values("name","identity")
-                context = {
-                    'status':'True',
-                    'member_data':member_data,
-                    'successful_submit':True
-                }
-                messages.success(request, "登入成功")
-                #要改成跳頁
-                return HttpResponseRedirect(request.path_info)
+                name = member_data[0]["name"]
+                identity = member_data[0]["identity"]
 
+                request.session['email'] = email
+                request.session['name'] = name
+                request.session['identity'] = identity
+                
+                #一般使用者登入跳轉到home_member.html
+                if identity == 1:
+                    return redirect('/rental/member_search_site/')
+                
+                #缺場材管理、系統管理登入URL
+                else:
+                    context = {
+                        'successful_submit':True
+                    }
+                    messages.success(request, "場材管理、系統管理登入成功")
+                    return HttpResponseRedirect(request.path_info)
             else:
                 messages.error(request, "email或密碼輸入錯誤")
                 return HttpResponseRedirect(request.path_info)
@@ -56,5 +65,9 @@ def login(request):
     context['form']=form
     return render(request, 'login.html', context)            
 
-
+#登出
+def logout(request):
+    if request.method == "POST":
+        request.session.clear()
+        return redirect('/member/login/')
     

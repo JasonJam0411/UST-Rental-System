@@ -1,35 +1,44 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from Rental.models import Duration
 
-# 會員登入
-def search_nu_site(request):
-    context = {}
-    if request.method == "POST":
-        school = request.POST['school']
-        usage = request.POST['usage']
-        date = request.POST['date']
-        start = int(request.POST['start'])
-        end = int(request.POST['end'])
+#一般使用者-搜尋場地
+def member_search_site(request):
+    if 'email' not in request.session:
+        return redirect('/member/login/')
+    else:
+        context = {}
+        print(request.session.get("email"))
 
-        end_first = start+1
-        start_last =end-1
+        if request.method == "POST":
+            school = request.POST['school']
+            usage = request.POST['usage']
+            date = request.POST['date']
+            start = int(request.POST['start'])
+            end = int(request.POST['end'])
 
-        result = Duration.objects.filter(
-        site_id__department_id__school_id = school,
-				site_id__usage = usage,
-				date = date,
-				rent_status = 0,
-				start__gte = start,
-				start__lte = start_last,
-				end__gte = end_first,
-				end__lte = end
-            )
-        print(result)
-        context["condition_query_set"] = result
+            end_first = start+1
+            start_last =end-1
+
+            result = Duration.objects.filter(
+            site_id__department_id__school_id = school,
+                    site_id__usage = usage,
+                    date = date,
+                    rent_status = 0,
+                    start__gte = start,
+                    start__lte = start_last,
+                    end__gte = end_first,
+                    end__lte = end
+                )
+
+            context["condition_query_set"] = result
+            return render(request, "index.html", context)
+
         return render(request, "index.html", context)
-
-    return render(request, "index.html", context)
  
+ #預約場地
+def member_display_reserve_site(request):
+    
+    return render(request, "index.html")
 
 
 

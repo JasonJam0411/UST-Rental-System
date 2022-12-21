@@ -1,0 +1,30 @@
+{% extends 'home_member.html' %}
+
+{% block content %}
+
+<section id="intro">
+    <div class='jumbotron'  style="background-color:#E9E9D8 ;">
+        <div class="container" style="background-color:#f3f3eb ;">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>租借內容</h1>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <p style="font-size: 30px;">租借名稱:運動中心一樓籃球C場</p>
+                <p style="font-size: 30px;">學校:中央大學</p>
+                <p style="font-size: 30px;">位置:中央大學</p>
+                <p style="font-size: 30px;">地址:320桃園市中壢區中大路300號</p>
+                <p style="font-size: 30px;">租借日期:2022-12-4</p>
+                <p style="font-size: 30px;">租借時間:8:00-9:00</p>
+                <p style="font-size: 30px;">租借費用:$20</p>
+            </div>
+            <div class="col-md-12 text-center">
+                <button  class="btn" onclick="show_confirm()">確定租借</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock  %}
