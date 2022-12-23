@@ -1,0 +1,124 @@
+{% extends 'home_member.html' %}
+
+{% block title %}
+器材查詢
+{% endblock %}
+
+{% block content %}
+    <!--搜尋器材框 BEGIN-->
+    <div class="container border rounded shadow p-3 mb-5 bg-body" style="margin-bottom:2%; margin-top:2%">
+        <form  action="" method="POST" class="row">
+        {% csrf_token %}
+        <div class="col-md-auto">
+            <label class="form-label" style="font-size: 25px;">學校</label>
+            <select  class="form-select"  name="school" style="font-size: 20px;">
+                <option value="1">國立中央大學</option>
+                <option value="2">國立陽明交通大學</option>
+                <option value="3">國立清華大學</option>
+                <option value="4">國立政治大學</option>
+            </select>
+        </div>
+        <div class="col col-lg-2">
+            <label class="form-label" style="font-size: 25px;">用途</label>
+            <select class="form-select" name="usage" style="font-size: 20px;">
+                <option value="運動">運動</option>
+                <option value="會議">會議</option>
+            </select>
+        </div>
+        <div class="col-md-auto">
+            <label class="form-label" style="font-size: 25px;">選擇租借日期</label>
+            <input class="form-control" type="date" id="date_info_s"  aria-label="Search" name="date" Required>
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <input class="btn btn-success" type="submit" value="搜尋" style="margin-top:2%"/>
+        </div>
+        </form>
+    </div>
+    <!--搜尋器材框 END-->
+    
+    <!--顯示可預約器材 BEGIN-->
+    <div class="container">
+        <div class="row">
+        
+            {% for obj in not_rented_equipment %}
+                <div class="col-3">
+                    <div class="card" style="width: 80%;">
+                        <div class="card-header text-center">
+                            <img src=/static/{{ obj.image }} height="45%"  width="60%">
+                        </div>
+                        <div class="card-body" style="margin-left : 2%">
+                            <h1 class="card-title  text-center" style="margin-bottom:10%">{{ obj.name }}</h1>
+                            <h5 class="card-text">用途:{{ obj.usage }}</h4>
+                            <h5 class="card-text">剩餘數量:{{ obj.number }}</h4>
+                            <h5 class="card-text">租借價格:{{ obj.price }} /單次</h4>
+                            <h5 class="card-text">繳費地點:{{ obj.department_id }}</h4>
+                            <h5 class="card-text">歸還地點:{{ obj.department_id }}</h4>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" style="width : 95%" data-toggle="modal" data-target="#rentalRule{{obj.equipment_id__id}}">預約</button>
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+            {% endfor %}
+
+            {% for obj in condition_query_set %}
+                    {% if equ_remaining_number %}
+                        <div class="col-3">
+                            <div class="card" style="width: 80%;">
+                                <div class="card-header text-center">
+                                    <img src=/static/{{ obj.equipment_id__image }} height="60%"  width="45%">
+                                </div>
+                                <div class="card-body" style="margin-left : 2%">
+                                    <h1 class="card-title  text-center" style="margin-bottom:10%">{{ obj.equipment_id__name }}</h1>
+                                    <h5 class="card-text">用途:{{ obj.equipment_id__usage }}</h4>
+                                    <h5 class="card-text">剩餘數量:{{ obj.equ_remaining_number }}</h4>
+                                    <h5 class="card-text">租借價格:{{ obj.equipment_id__price }} /單次</h4>
+                                    <h5 class="card-text">繳費地點:{{ obj.equipment_id__department_id__address }}</h4>
+                                    <h5 class="card-text">歸還地點:{{ obj.equipment_id__department_id__address }}</h4>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="button" class="btn btn-primary btn-lg btn-block" style="width : 95%" data-toggle="modal" data-target="#rentalRule{{obj.equipment_id__id}}">預約</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+            {% endfor %}
+
+        </div>
+    </div>
+    <!--顯示可預約器材 END-->
+
+
+
+
+
+
+
+
+    {% comment %} <div class="row">
+        <div class="col" style="display:flex ;  margin-right : 50px;">
+                <div class="left" >
+                    <img src="pictures/排球.jpg" height="300"  width="400">
+                </div>
+        </div>
+        <div class="col" style="display:flex ;  margin-right : 50px;">
+            <div class="right" >
+                <h1>排球</h1>
+                <br>
+                <h2>用途:運動</h2>
+                <br>
+                <h2>價錢:1小時50元/顆</h2>
+                <br>
+                <br>
+                <button class="btn btn-primary" onclick="myFunction()">預約數量</button>
+
+            </div>
+        </div>
+    </div> {% endcomment %}
+
+
+
+
+{% endblock  %}

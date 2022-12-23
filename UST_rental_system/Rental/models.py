@@ -9,7 +9,7 @@ class Department(models.Model):
     tel = models.CharField(db_column='tel',max_length=45)  
     school_id = models.ForeignKey(School, db_column='school_id', on_delete=models.CASCADE)
     def __str__(self):
-        return self.name
+        return self.address
 
     class Meta:
         db_table = 'department'
@@ -55,3 +55,27 @@ class Rent_Site(models.Model):
     class Meta:
         db_table = 'rent_site'
         managed=False
+
+class Equipment(models.Model):
+    id = models.IntegerField(db_column='id', primary_key=True)
+    name = models.CharField(db_column='name', max_length=45)
+    usage = models.CharField(db_column='usage', max_length=10)
+    number = models.IntegerField(db_column='number')
+    price = models.IntegerField(db_column='price')
+    rule = models.DateField(db_column='rule',max_length=200)
+    image = models.CharField(db_column='image', max_length=45)
+    department_id= models.ForeignKey('Department', db_column='department_id', on_delete=models.CASCADE)
+    class Meta:
+        db_table = 'equipment'
+
+
+class Rent_Equipment(models.Model):
+    id = models.IntegerField(db_column='id', primary_key=True)
+    date = models.DateField(db_column='date')
+    number = models.IntegerField(db_column='number')
+    status = models.IntegerField(db_column='status')
+    timestamp = models.DateTimeField(db_column='timestamp')
+    member_id= models.ForeignKey(Member, db_column='member_id', on_delete=models.CASCADE)
+    equipment_id= models.ForeignKey('Equipment', db_column='equipment_id', on_delete=models.CASCADE)
+    class Meta:
+        db_table = 'rent_equipment'

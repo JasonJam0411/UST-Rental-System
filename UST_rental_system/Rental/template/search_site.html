@@ -6,6 +6,7 @@
 
 {% block content %}
 
+    <!--搜尋場地框 BEGIN-->
         <div class="container border rounded shadow p-3 mb-5 bg-body" style="margin-bottom:2%; margin-top:2%">
                 <form  action="" method="POST" class="row">
                 {% csrf_token %}
@@ -64,6 +65,9 @@
                 {% comment %} <a class='btn' href='search_list.html' type="submit">Search</a> {% endcomment %}
                 </form>
         </div>
+    <!--搜尋場地框 END-->
+
+    <!--顯示可預約場地 BEGIN-->
         <div class="container">
 
             {% for obj in condition_query_set %}
@@ -90,6 +94,8 @@
                             <div class="card-footer" style="display:inline">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rentalRule{{obj.id}}">{{obj.start}}:00-{{obj.end}}:00</button>
                             </div>
+
+
                             <!-- 閱讀租借規則MODAL BEGIN -->
                                 <div class="modal fade" id="rentalRule{{obj.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -115,11 +121,14 @@
                                     </div>
                                 </div>
                             <!-- 閱讀租借規則MODAL END -->
+
+                            
                         </div>
                     </div>
                 {% endfor %}
           
         </div>
+    <!--顯示可預約場地 END-->
 
 
 {% endblock  %}

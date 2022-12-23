@@ -21,7 +21,7 @@
         <div class='container'>
             <nav class="navbar navbar-expand-lg ">
                 <div class="container-fluid">
-                <a class="navbar-brand" href="#" >
+                <a class="navbar-brand" href="{% url 'rental:search_site' %}" >
                     <img src="{% static 'UST_pictures/ust_logo.png' %}" style="width: 100px; height: 100px; ">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,13 +30,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page"  a href="home-nu.html">預約場地</a>
+                        <a class="nav-link active" aria-current="page"  href="{% url 'rental:search_site' %}">預約場地</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="home-nu.html">開始預約</a>
+                        <a class="nav-link active" href="{% url 'rental:search_equipment' %}">預約器材</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="rental_record.html">租借紀錄</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                          租借紀錄
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="member-nu_edit.html">目前租借紀錄</a></li>
+                          <li><a class="dropdown-item" href="member-nu_edit.html">歷史租借紀錄</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">

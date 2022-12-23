@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
-from Rental.models import Duration, Site, Rent_Site
+from Rental.models import Duration, Rent_Site, Rent_Equipment, Equipment
 from Member.models import Member
+from django.db.models import IntegerField, ExpressionWrapper, F, Q, Sum
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 import datetime
 
 #回首頁
-def back_to_index(request):
+def back_to_search_site(request):
     if request.method == "POST":
         return redirect('/rental/search_site/')
 
@@ -44,9 +45,9 @@ def search_site(request):
                 )
 
             context["condition_query_set"] = result
-            return render(request, "index.html", context)
+            return render(request, "search_site.html", context)
 
-        return render(request, "index.html", context)
+        return render(request, "search_site.html")
  
 #顯示欲預約場地
 def display_reserve_site(request):
@@ -99,4 +100,54 @@ def reserve_site(request):
 
             messages.success(request, "預約場地成功! 請盡速至繳費地點繳費，否則將取消場地預約")
             return display_reserve_site(request)
+
+
+#搜尋器材
+def search_equipment(request):
+    if 'email' not in request.session:
+        return redirect('/member/login/')
+    else:
+        #補session
+
+        context = {}
+
+        if request.method == "POST":
+            school = request.POST['school']
+            usage = request.POST['usage']
+            date = request.POST['date']
+            
+            #依學校、用途、日期搜尋可預約器材
+            all_equipment = Equipment.objects.all()
+            result = Rent_Equipment.objects.select_related('Equipment').values(
+                'equipment_id__id',
+                'equipment_id__name',
+                'equipment_id__usage',
+                'equipment_id__price',
+                'equipment_id__rule',
+                'equipment_id__image',
+                'equipment_id__department_id__address'
+                ).filter(
+                    Q(date=date,status=0)|Q(date=date,status=1),
+                    equipment_id__usage = usage,
+                    equipment_id__department_id__school_id = school,
+                ).annotate(
+                    equ_remaining_number = ExpressionWrapper( F('equipment_id__number') - Sum('number', output_field=IntegerField()), output_field=IntegerField())
+                )
+            #當天有使用者租借的所有器材id
+            list=[]
+            for equipment_id in result:
+                list.append(equipment_id['equipment_id__id'])
+            
+            #當天沒有任何使用者租借的所有器材id
+            not_rented_equipment = Equipment.objects.filter(
+                    usage = usage,
+                    department_id__school_id = school,
+                ).exclude(id__in=list)
+
+            
+            context["condition_query_set"] = result
+            context["not_rented_equipment"] = not_rented_equipment
+            return render(request, "search_equipment.html", context)
+
+        return render(request, "search_equipment.html")
 
