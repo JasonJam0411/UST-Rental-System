@@ -1,0 +1,62 @@
+{% extends 'home_member.html' %}
+
+{% block title %}
+器材預約
+{% endblock %}
+
+{% block content %}
+
+        <!-- 預約器材成功/失敗Alert BEGIN -->
+        <div class="container">
+            {% if messages %}
+                <div class="row">
+                    <div class="">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            <p>{{ message }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <!-- 預約器材成功/失敗Alert END -->
+
+        <!-- 顯示預約器材內容 BEGIN -->
+        <div class="container" style="background-color:#f3f3eb ;">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>租借內容</h1>
+                    <br>
+                </div>
+            </div>
+            {% for obj in reserve_equipment %}
+                <div class="row">
+                        <p style="font-size: 30px;">租借名稱: {{obj.name}}</p>
+                        <p style="font-size: 30px;">租借日期: {{search_equipment_date}}</p>
+                        <p style="font-size: 30px;">租借費用: {{total_price}}</p>
+                        <p style="font-size: 30px;">器材管理單位: {{obj.department_id.name}}</p>
+                        <p style="font-size: 30px;">器材管理員: {{obj.department_id.manager}}</p>
+                        <p style="font-size: 30px;">電話: {{obj.department_id.tel}}</p>
+                        <p style="font-size: 30px;">繳費地點: {{obj.department_id.address}}</p>
+                </div>
+                <div class="col-md-12 text-center">
+                    {% if not successful_submit %}
+                    <form  action="{% url 'rental:reserve_equipment' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="reserve_equipment_id" value="{{obj.id}}" />
+                        <input class="btn btn-primary" type="submit" value="確定租借" />
+                    </form>
+                    {% endif %}
+                    {% if successful_submit %}
+                    <form  action="{% url 'rental:back_to_search_equipment' %}" method="POST">
+                        {% csrf_token %}
+                        <input class="btn btn-success" type="submit" value="回到器材查詢" />
+                    </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <!-- 顯示預約器材內容 END -->
+
+{% endblock  %}

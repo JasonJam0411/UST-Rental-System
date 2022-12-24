@@ -40,7 +40,7 @@
                           租借紀錄
                         </a>
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="member-nu_edit.html">目前租借紀錄</a></li>
+                          <li><a class="dropdown-item" href="{% url 'rental:current_rental_record' %}">目前租借紀錄</a></li>
                           <li><a class="dropdown-item" href="member-nu_edit.html">歷史租借紀錄</a></li>
                         </ul>
                     </li>
@@ -82,4 +82,37 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
   </body>
+    <script>
+        $(document).ready(function (){
+            Today = new Date();
+            yy=Today.getFullYear();
+            mm=Today.getMonth()+1;
+            dd=Today.getDate();
+            h=Today.getHours();
+            m=Today.getMinutes();
+            s=Today.getSeconds();
+            var time = new Date();
+            var day = ("0" + time.getDate()).slice(-2);
+            var month = ("0" + (time.getMonth() + 1)).slice(-2);
+            var today = time.getFullYear() + "-" + (month) + "-" + (day);
+            $('#date').val(today);
+            })
+
+        function convertToISO(timebit) {
+            // remove GMT offset
+            timebit.setHours(0, -timebit.getTimezoneOffset(), 0, 0);
+            // format convert and take first 10 characters of result
+            var isodate = timebit.toISOString().slice(0,10);
+            return isodate;
+            }
+
+            var bookdate = document.getElementById('date');
+            var currentdate = new Date();
+            bookdate.min = convertToISO(currentdate);
+            bookdate.placeholder = bookdate.min;
+            var futuredate = new Date();
+            // go forward 7 days into the future
+            futuredate.setDate(futuredate.getDate() + 7);
+            bookdate.max = convertToISO(futuredate);
+    </script>
 </html>

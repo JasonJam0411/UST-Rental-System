@@ -8,5 +8,9 @@ urlpatterns = [
     path('reserve_site/', views.reserve_site, name='reserve_site'),
     path('back_to_search_site/', views.back_to_search_site, name='back_to_search_site'),
     path('search_equipment/', views.search_equipment, name='search_equipment'),
+    path('display_reserve_equipment/', views.display_reserve_equipment, name='display_reserve_equipment'),
+    path('reserve_equipment/', views.reserve_equipment, name='reserve_equipment'),
+    path('back_to_search_equipment/', views.back_to_search_equipment, name='back_to_search_equipment'),
+    path('current_rental_record/', views.current_rental_record, name='current_rental_record'),
 
 ]

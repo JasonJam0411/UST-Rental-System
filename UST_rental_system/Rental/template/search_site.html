@@ -7,7 +7,7 @@
 {% block content %}
 
     <!--搜尋場地框 BEGIN-->
-        <div class="container border rounded shadow p-3 mb-5 bg-body" style="margin-bottom:2%; margin-top:2%">
+        <div class="container border rounded shadow-lg p-3 mb-5 bg-white" style="margin-bottom:2%; margin-top:2%">
                 <form  action="" method="POST" class="row">
                 {% csrf_token %}
                 <div class="col-md-8">
@@ -22,13 +22,13 @@
                 <div class="col-6 col-md-4">
                     <label class="form-label" style="font-size: 25px;">用途</label>
                     <select class="form-select" name="usage" style="font-size: 20px;">
-                        <option value="運動">運動</option>
                         <option value="會議">會議</option>
+                        <option value="運動">運動</option>
                     </select>
                 </div>
                 <div class="col-6 col-md-4">
                     <label class="form-label" style="font-size: 25px;">選擇租借日期</label>
-                    <input class="form-control" type="date" id="date_info_s"  aria-label="Search" name="date" Required>
+                    <input class="form-control" type="date" id="date"  aria-label="Search" name="date" Required>
                 </div>
                 <div class="col-6 col-md-4">
                         <label class="form-label" style="font-size: 25px;">開始時間</label>
@@ -122,7 +122,7 @@
                                 </div>
                             <!-- 閱讀租借規則MODAL END -->
 
-                            
+
                         </div>
                     </div>
                 {% endfor %}
