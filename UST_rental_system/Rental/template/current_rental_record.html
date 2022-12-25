@@ -1,4 +1,8 @@
-{% extends 'home_member.html' %}
+{% extends 'base_member.html' %}
+
+{% block active3 %} 
+active
+{% endblock %}
 
 {% block title %}
 目前租借紀錄
@@ -113,6 +117,12 @@
                             </div>
                         <!-- 刪除場地預約MODAL END -->
                     {% endfor %}
+                {% endif %}
+                {% if not member_rent_site %}
+                <tr>
+                    <th scope="row" style="text-align: center;"><h3>#</h3></th>
+                    <td colspan="9" class="table-active" style="text-align: center;"><h3>目前無任何場地租借紀錄</h3></td>
+                </tr>
                 {% endif %} 
             </tbody>
         </table>
@@ -232,6 +242,12 @@
 
 
                     {% endfor %}
+                {% endif %} 
+                {% if not member_rent_equipment %}
+                    <tr>
+                        <th scope="row" style="text-align: center;"><h3>#</h3></th>
+                        <td colspan="9" class="table-active" style="text-align: center;"><h3>目前無任何器材租借紀錄</h3></td>
+                    </tr>
                 {% endif %} 
             </tbody>
         </table>

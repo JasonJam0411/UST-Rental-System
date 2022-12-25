@@ -52,7 +52,6 @@ def add_site(request):
                 end = int(request.POST["end"])
 
                 for i in range(1,8):
-
                     date = datetime.date.today()+ datetime.timedelta(days=i)
                     for i in range(start,end):  #(8,11)
                         start_time = i
@@ -118,9 +117,14 @@ def delete_site(request):
 
     if request.method == "POST":
         site_id = request.POST.get('id')
-        data = Site.objects.get(id=site_id)    
-        data.delete()
-        return site_management(request)
+        data = Site.objects.get(id=site_id) 
+
+        if Duration.objects.filter(site_id=site_id,rent_status=1):
+            messages.error(request, "該場地正被租借中，不可被刪除")
+            return site_management(request)
+        else:
+            data.delete()   
+            return site_management(request)
 
 
 

@@ -1,7 +1,11 @@
-{% extends 'home_member.html' %}
+{% extends 'base_member.html' %}
 
 {% block title %}
-場地查詢
+場地預約
+{% endblock %}
+
+{% block active1 %} 
+active
 {% endblock %}
 
 {% block content %}
@@ -75,7 +79,7 @@
                     <div class="container">
                         <div class="card flex-row flex-wrap">
                             <div class="card-header">
-                                <img src=/static/{{ obj.site_id.image }} height="300"  width="400">
+                                <img src=/media/{{ obj.site_id.image }} height="300"  width="400">
                             </div>
                             <div class="card-block" style="margin-left : 2%">
                                     <h1>{{obj.site_id.name}}</h1>

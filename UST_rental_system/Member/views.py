@@ -119,7 +119,9 @@ def edit_member_profile(request):
         context={}
         identity = request.session.get("identity")
         if(identity == 1):
-            context["base_html"] = 'home_member.html'
+            context["base_html"] = 'base_member.html'
+            context["active_number"] = 'active4'
+
         elif(identity == 2):
             context["base_html"] = 'base_site_equipment_management.html'
         else:
