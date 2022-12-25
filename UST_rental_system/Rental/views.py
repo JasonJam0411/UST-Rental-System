@@ -266,16 +266,16 @@ def current_rental_record(request):
         member_id = request.session.get('id')
         #當天日期與後7天
         date = datetime.date.today()  # Returns YYYY-MM-DD
-        date_7dayAfter = datetime.date.today() + datetime.timedelta(days=7)
+        date_7daysAfter = datetime.date.today() + datetime.timedelta(days=7)
         
         member_rent_site = Rent_Site.objects.filter(
                     member_id = member_id,
-                    date__range=[date, date_7dayAfter]
+                    date__range=[date, date_7daysAfter]
                 ).order_by('date')
 
         member_rent_equipment = Rent_Equipment.objects.filter(
                     member_id = member_id,
-                    date__range=[date, date_7dayAfter]
+                    date__range=[date, date_7daysAfter]
                 ).order_by('date')
         
         context={}
@@ -293,3 +293,77 @@ def current_rental_record(request):
 
 
         return render(request, "current_rental_record.html", context)
+
+#刪除場地預約
+def delete_reserve_site(request):
+    
+    if request.method == "POST":
+        
+        rent_site_id = request.POST.get('reserve_site_id', False)
+        #避免重整頁面發生Bug
+        if(rent_site_id == False):
+            return current_rental_record(request)
+        
+        #rent_site的duration_id
+        rent_site_duration_id = Rent_Site.objects.values('duration_id').filter(id = rent_site_id)
+        #duration修改status=0
+        Duration.objects.filter(id = rent_site_duration_id[0]['duration_id']).update(rent_status = 0)
+        #rent_site刪整筆預約場地紀錄
+        rent_site_record = Rent_Site.objects.filter(id = rent_site_id)
+        rent_site_record.delete()
+
+        return current_rental_record(request)
+
+#刪除器材預約
+def delete_reserve_equipment(request):
+    
+    if request.method == "POST":
+        
+        rent_equipment_id = request.POST.get('reserve_equipment_id', False)
+        #避免重整頁面發生Bug
+        if(rent_equipment_id == False):
+            return current_rental_record(request)
+        
+        #rent_equipment刪整筆預約場地紀錄
+        rent_equipment_record = Rent_Equipment.objects.filter(id = rent_equipment_id)
+        rent_equipment_record.delete()
+        
+    return current_rental_record(request)
+
+#歷史租借紀錄
+def historical_rental_record(request):
+    if 'email' not in request.session:
+        return redirect('/member/login/')
+    else:
+        member_id = request.session.get('id')
+        #當天日期與前31天
+        date = datetime.date.today() - datetime.timedelta(days=1) # Returns YYYY-MM-DD
+        date_31daysBefore = datetime.date.today() - datetime.timedelta(days=31)
+        
+        member_rent_site = Rent_Site.objects.filter(
+                    member_id = member_id,
+                    status = 1,
+                    date__range=[date_31daysBefore, date]
+                ).order_by('date')
+
+        member_rent_equipment = Rent_Equipment.objects.filter(
+                    member_id = member_id,
+                    status = 2,
+                    date__range=[date_31daysBefore, date]
+                ).order_by('date')
+        
+        context={}
+        
+        #檢查使用者有無場地/器材預約紀錄
+        if not member_rent_site:
+            context['member_rent_site'] = False
+        else:
+            context['member_rent_site'] = member_rent_site
+        
+        if not member_rent_equipment:
+            context['member_rent_equipment'] = False
+        else:
+            context['member_rent_equipment'] = member_rent_equipment
+
+        return render(request, "historical_rental_record.html", context)
+

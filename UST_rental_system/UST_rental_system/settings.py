@@ -134,8 +134,8 @@ STATICFILES_DIRS = (
     Path.joinpath(BASE_DIR, 'static'),
 )
 
-MEDIA_URL = '/image/'
-MEDIA_ROOT = Path.joinpath(MEMBER_TAMPLATE_DIR, 'image')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
 
 
 

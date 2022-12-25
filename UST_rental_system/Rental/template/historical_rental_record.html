@@ -1,12 +1,12 @@
 {% extends 'home_member.html' %}
 
 {% block title %}
-目前租借紀錄
+歷史租借紀錄
 {% endblock %}
 
 {% block content %}
     <div class="container border border-dark border-3 shadow-lg p-3 mb-5 bg-white rounded-pill" style="width:20%;margin-top:2%">
-        <h3 style="text-align: center;">目前場地預約紀錄</h3>
+        <h3 style="text-align: center;">歷史場地預約紀錄</h3>
     </div>
     <div class="container shadow-lg p-3 mb-5 bg-white rounded">
         <table class="table table-hover table-bordered">
@@ -21,7 +21,6 @@
                     <th scope="col" style="width:10%">繳費地點</th>
                     <th scope="col" style="width:8%">詳細資訊</th>
                     <th scope="col" style="width:8%">狀態</th>
-                    <th scope="col" style="width:8%">取消預約</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,15 +35,7 @@
                             <td style="text-align: center;">{{ obj.duration_id.site_id.price }}</td>
                             <td style="text-align: center;">{{ obj.duration_id.site_id.department_id.name }}</td>
                             <td style="text-align: center;"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#detail{{obj.id}}"><b>查看</b></button></td>
-                            
-                            {% if obj.status == 0 %}
-                                <td style="text-align: center;"><button type="button" class="btn btn-warning"><b>尚未付款</b></button></td>
-                                <td style="text-align: center;"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_reserve_site{{obj.id}}"><b>取消</b></button></td>
-                                {% endif %}
-                            {% if obj.status == 1 %}
-                                <td style="text-align: center;"><button type="button" class="btn btn-success"><b>已付款</b></button></td>
-                                <td style="text-align: center;"><button type="button" class="btn btn-danger" disabled><b>取消</b></button></td>
-                            {% endif %}             
+                            <td style="text-align: center;"><button type="button" class="btn btn-success"><b>已付款</b></button></td>
                         </tr>
                         
                         <!-- 場地詳細資訊MODAL BEGIN -->
@@ -84,34 +75,6 @@
                                 </div>
                             </div>
                         <!-- 場地詳細資訊MODAL END -->
-
-                        <!-- 刪除場地預約MODAL BEGIN -->
-                            <div class="modal fade" id="delete_reserve_site{{obj.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h1 class="modal-title" id="exampleModalLongTitle">
-                                        確定
-                                        <span class="badge bg-danger">取消</span>
-                                        <span class="badge bg-primary">{{ obj.duration_id.site_id.department_id.school_id.name }}</span>
-                                        <span class="badge bg-dark">{{ obj.duration_id.site_id.name }}</span> 的預約嗎?
-                                    </h1>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">再想想</button>
-                                        <form  action="{% url 'rental:delete_reserve_site' %}" method="POST">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="reserve_site_id" value="{{obj.id}}" />
-                                            <input class="btn btn-danger" type="submit" value="確定" />
-                                        </form>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        <!-- 刪除場地預約MODAL END -->
                     {% endfor %}
                 {% endif %} 
             </tbody>
@@ -119,7 +82,7 @@
     </div>
 
     <div class="container border border-dark border-3 shadow-lg p-3 mb-5 bg-white rounded-pill" style="width:20%;">
-        <h3 style="text-align: center;">目前器材預約紀錄</h3>
+        <h3 style="text-align: center;">歷史器材預約紀錄</h3>
     </div>
 
     <div class="container shadow-lg p-3 mb-5 bg-white rounded">
@@ -135,7 +98,6 @@
                     <th scope="col" style="width:10%">繳費地點</th>
                     <th scope="col" style="width:8%">詳細資訊</th>
                     <th scope="col" style="width:8%">預約狀態</th>
-                    <th scope="col" style="width:8%">取消預約</th>
                 </tr>
             </thead>
             <tbody>
@@ -150,19 +112,7 @@
                             <td style="text-align: center;">{% widthratio obj.number 1 obj.equipment_id.price %}</td>
                             <td style="text-align: center;">{{ obj.equipment_id.department_id.name }}</td>
                             <td style="text-align: center;"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#detail{{obj.id}}"><b>查看</b></button></td>
-
-                            {% if obj.status == 0 %}
-                                <td style="text-align: center;"><button type="button" class="btn btn-warning"><b>尚未付款</b></button></td>
-                                <td style="text-align: center;"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_reserve_equipment{{obj.id}}"><b>取消</b></button></td>
-                            {% endif %}
-                            {% if obj.status == 1 %}
-                                <td style="text-align: center;"><button type="button" class="btn btn-danger"><b>尚未歸還</b></button></td>
-                                <td style="text-align: center;"><button type="button" class="btn btn-danger" disabled><b>取消</b></button></td>
-                            {% endif %}  
-                            {% if obj.status == 2 %}
-                                <td style="text-align: center;"><button type="button" class="btn btn-success"><b>已歸還</b></button></td>
-                                <td style="text-align: center;"><button type="button" class="btn btn-danger" disabled><b>取消</b></button></td>
-                            {% endif %} 
+                            <td style="text-align: center;"><button type="button" class="btn btn-success"><b>已歸還</b></button></td>
                         </tr>
 
                          <!-- 場地詳細資訊MODAL BEGIN -->
@@ -198,39 +148,6 @@
                             </div>
                         </div>
                     <!-- 場地詳細資訊MODAL END -->
-                    
-                    <!-- 刪除場地預約MODAL BEGIN -->
-                        <div class="modal fade" id="delete_reserve_equipment{{obj.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <h1 class="modal-title" id="exampleModalLongTitle">
-                                    確定
-                                    <span class="badge bg-danger">取消</span>
-                                    <span class="badge bg-primary">{{ obj.equipment_id.department_id.school_id.name }}</span>
-                                    <span class="badge bg-dark">{{ obj.equipment_id.name }}</span> 的預約嗎?
-                                </h1>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">再想想</button>
-                                    <form  action="{% url 'rental:delete_reserve_equipment' %}" method="POST">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="reserve_equipment_id" value="{{obj.id}}" />
-                                        <input class="btn btn-danger" type="submit" value="確定" />
-                                    </form>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    <!-- 刪除場地預約MODAL END -->
-
-
-
-
-
                     {% endfor %}
                 {% endif %} 
             </tbody>

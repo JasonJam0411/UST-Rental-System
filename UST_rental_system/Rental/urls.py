@@ -12,5 +12,8 @@ urlpatterns = [
     path('reserve_equipment/', views.reserve_equipment, name='reserve_equipment'),
     path('back_to_search_equipment/', views.back_to_search_equipment, name='back_to_search_equipment'),
     path('current_rental_record/', views.current_rental_record, name='current_rental_record'),
+    path('delete_reserve_site/', views.delete_reserve_site, name='delete_reserve_site'),
+    path('delete_reserve_equipment/', views.delete_reserve_equipment, name='delete_reserve_equipment'),
+    path('historical_rental_record/', views.historical_rental_record, name='historical_rental_record'),
 
 ]

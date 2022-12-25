@@ -62,7 +62,7 @@ class Equipment(models.Model):
     usage = models.CharField(db_column='usage', max_length=10)
     number = models.IntegerField(db_column='number')
     price = models.IntegerField(db_column='price')
-    rule = models.DateField(db_column='rule',max_length=200)
+    rule = models.CharField(db_column='rule',max_length=200)
     image = models.CharField(db_column='image', max_length=45)
     department_id= models.ForeignKey('Department', db_column='department_id', on_delete=models.CASCADE)
     class Meta:

@@ -28,7 +28,7 @@ class Member(models.Model):
     tel = models.CharField(db_column='tel', max_length=45)
     email = models.EmailField(db_column='email', max_length=45)
     password = models.CharField(db_column='password', max_length=45)
-    image = models.ImageField(db_column='image',upload_to='member_img/', blank=False, null=False)
+    image = models.ImageField(db_column='image',upload_to='member_pictures/', blank=False, null=False)
     school_id = models.ForeignKey('School', db_column='school_id', on_delete=models.CASCADE)
 
     #upload_date = models.DateField(default=timezone.now)

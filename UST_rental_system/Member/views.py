@@ -5,10 +5,7 @@ from .models import Member
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 
-
-# Create your views here.
-
-
+#註冊
 def register(request):
     form = MemberModelForm()
     context = {}
@@ -68,6 +65,58 @@ def login(request):
     
     context['form']=form
     return render(request, 'login.html', context)            
+
+
+#修改會員資料
+def edit_member_profile(request):
+    if 'email' not in request.session:
+        return redirect('/member/login/')
+    else:
+        
+        if request.method == "POST":
+            old_password = request.POST['old_password']
+            member_id = request.session.get('id')
+            
+            if Member.objects.filter(id=member_id, password=old_password).exists():
+                cellphone = request.POST['cellphone']
+                new_password = request.POST['new_password']
+                if(len(cellphone) != 0):
+                    if(len(cellphone) < 10):
+                        messages.error(request, "輸入手機號碼長度錯誤! (格式: 09開頭+8位數字)")
+                        return HttpResponseRedirect(request.path_info)
+                    elif(cellphone[0:2] != '09'):
+                        messages.error(request, "輸入手機號碼格式錯誤! (格式: 09開頭+8位數字)")
+                        return HttpResponseRedirect(request.path_info)
+                    else:
+                        heck_cellphone = ['0','1','2','3','4','5','6','7','8','9']
+                        for char in cellphone:
+                            if(char not in heck_cellphone):
+                                messages.error(request, "輸入手機號碼格式錯誤! (格式: 09開頭+8位數字)")
+                                return HttpResponseRedirect(request.path_info)
+                        
+                        #修改會員手機電話
+                        Member.objects.filter(id=member_id).update(tel=cellphone)
+                        messages.success(request, "手機號碼修改成功!")
+                        return HttpResponseRedirect(request.path_info)
+                elif(len(new_password) != 0):
+                    if(len(new_password) < 8):
+                        messages.error(request, "輸入新密碼長度錯誤! (格式: 密碼長度8位數(含)以上)")
+                        return HttpResponseRedirect(request.path_info)
+                    else:
+                        #修改會員密碼
+                        Member.objects.filter(id=member_id).update(password=new_password)
+                        messages.success(request, "新密碼修改成功!")
+                        return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request, "請輸入手機號碼或新密碼進行修改!")
+                    return HttpResponseRedirect(request.path_info)
+
+                #new_password = request.POST['new_password']
+            else:
+                messages.error(request, "輸入舊密碼錯誤!!")
+                return HttpResponseRedirect(request.path_info)
+
+        return render(request, 'edit_member_profile.html')   
 
 #登出
 def logout(request):
