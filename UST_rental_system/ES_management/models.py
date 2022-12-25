@@ -6,7 +6,7 @@ class Site(models.Model):
     name = models.CharField(db_column='name', max_length=45)
     usage = models.CharField(db_column='usage', max_length=45)
     price = models.IntegerField(db_column='price')
-    rule = models.DateField(db_column='rule',max_length=200)
+    rule = models.CharField(db_column='rule',max_length=200)
     image = models.ImageField(db_column='image', upload_to='site_pictures/')
     address = models.CharField(db_column='address', max_length=45)
     location = models.CharField(db_column='location', max_length=45)

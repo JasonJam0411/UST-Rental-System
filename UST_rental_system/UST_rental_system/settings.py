@@ -103,7 +103,7 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ust_rental_system', # 資料庫名字
+        'NAME': 'test', # 資料庫名字
         'USER': "root",  # mysql 使用者名稱稱
         'PASSWORD': 'Aa980411',  # 資料庫的密碼
         'HOST': "127.0.0.1",  # 資料庫服務地址， 這裡我們是測試開發 填本地地址 

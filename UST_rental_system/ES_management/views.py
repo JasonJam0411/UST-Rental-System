@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Site, Department, Duration, Equipment
+from Rental.models import Rent_Equipment
 from .forms import AddSiteModelForm, UpdateSiteForm, AddEquModelForm, UpdateEquForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -43,7 +44,6 @@ def add_site(request):
         
         if request.method == "POST":
             form = AddSiteModelForm(request.POST, request.FILES)
-            print(form)
             if form.is_valid():                      
                 name = form.cleaned_data['name']
                 form.save()
@@ -75,12 +75,14 @@ def add_site(request):
         return render(request, 'add_site.html', {'form': form})
 
 
+
+
 #顯示修改場地頁面
 def display_edit_site(request):
     if request.method == "POST":
         form = UpdateSiteForm()
         site_id = request.POST.get('id')
-        request.session['s_id'] = site_id
+        request.session['site_id'] = site_id
     return render(request, 'edit_site.html', {'form': form})
 
 
@@ -96,13 +98,13 @@ def edit_site(request):
             form = UpdateSiteForm(request.POST ,request.FILES)
             print(form)
             if form.is_valid():
-                id = request.session['s_id']
+                id = request.session['site_id']
                 keyitem = Site.objects.get(id=id) 
                 form = UpdateSiteForm(request.POST, request.FILES,instance=keyitem)
 
                 form.instance.department_id = Site.objects.get(id=id).department_id
                 form.save() 
-                del request.session['s_id']
+                del request.session['site_id']
                 return site_management(request)
             else:
                 messages.error(request, "修改失敗")
@@ -206,6 +208,11 @@ def delete_equipment(request):
 
         id = request.POST.get('id')
         data = Equipment.objects.get(id=id)
-        data.delete()
-        
-        return equipment_management(request)
+        data_id = Equipment.objects.get(id=id).id
+
+        if Rent_Equipment.objects.filter(equipment_id=data_id) & Rent_Equipment.objects.filter( status = 1):
+            messages.error(request, "該器材正被租借中，不可被刪除")
+            return equipment_management(request)
+        else:
+            data.delete()       
+            return equipment_management(request)
