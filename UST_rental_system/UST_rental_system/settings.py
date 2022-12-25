@@ -23,8 +23,9 @@ MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEMBER__DIR = Path.joinpath(BASE_DIR,'Member')
-MEMBER_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Member/template') #登入、註冊
-RENTAL_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Rental/template') 
+MEMBER_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Member/template')
+RENTAL_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Rental/template')
+MEMBER_MANAGEMENT_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Member_management/template')
 #print(TAMPLATE_DIR)
 
 # Quick-start development settings - unsuitable for production
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "Member",
     "Rental",
+    "Member_management"
 ]
 
 MIDDLEWARE = [
@@ -67,7 +69,11 @@ ROOT_URLCONF = "UST_rental_system.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [MEMBER_TAMPLATE_DIR, RENTAL_TAMPLATE_DIR,],
+        "DIRS": [
+        MEMBER_TAMPLATE_DIR, 
+        RENTAL_TAMPLATE_DIR,
+        MEMBER_MANAGEMENT_TAMPLATE_DIR
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
