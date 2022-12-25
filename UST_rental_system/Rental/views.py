@@ -3,7 +3,6 @@ from Rental.models import Duration, Rent_Site, Rent_Equipment, Equipment
 from Member.models import Member
 from django.db.models import IntegerField, ExpressionWrapper, F, Q, Sum
 from django.contrib import messages
-from django.http import HttpResponseRedirect
 import datetime
 
 #回搜尋場地

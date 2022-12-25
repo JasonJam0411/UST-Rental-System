@@ -25,6 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEMBER__DIR = Path.joinpath(BASE_DIR,'Member')
 MEMBER_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Member/template')
 RENTAL_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Rental/template')
+ES_MANAGEMENT_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'ES_management/template')
+ORDER_MANAGEMENT_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Order_management/template')
 MEMBER_MANAGEMENT_TAMPLATE_DIR = Path.joinpath(BASE_DIR,'Member_management/template')
 #print(TAMPLATE_DIR)
 
@@ -51,6 +53,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "Member",
     "Rental",
+    "ES_management",
+    "Order_management",
     "Member_management"
 ]
 
@@ -72,6 +76,8 @@ TEMPLATES = [
         "DIRS": [
         MEMBER_TAMPLATE_DIR, 
         RENTAL_TAMPLATE_DIR,
+        ES_MANAGEMENT_TAMPLATE_DIR,
+        ORDER_MANAGEMENT_TAMPLATE_DIR,
         MEMBER_MANAGEMENT_TAMPLATE_DIR
         ],
         "APP_DIRS": True,

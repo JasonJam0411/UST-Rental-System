@@ -1,0 +1,158 @@
+{% extends 'base_site_equipment_management.html' %}
+
+{% block title %}
+審核預約
+{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <div class="row justify-content-center" style="display: flex;   justify-content: center;  align-items: center; ">
+
+
+        <form action="{% url 'Order_management:generate_rental' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group mr-sm-3 mb-2">
+                搜尋：<input name="email" type="search" class="light-table-filter" style="width: 300px;"/>
+            </div>
+            <input class="btn btn-primary mb-2" id="searchBtn" type="submit" value="搜尋" ></input>
+        </form>
+        
+        {% if messages %}
+        <div class="row">
+        <div class="">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                <p>{{ message }}</p>
+            </div>
+            {% endfor %}
+            </div>
+
+        </div>
+        {% endif %}
+
+        </div>
+    </div>
+        <div class='jumbotron'  style="background-color:#E9E9D8 ; ">
+            <div class="container" style="position: relative ;">
+                <div class="row" style=" margin-bottom : 20px; ">
+                    <div class="col-md-12 text-center">
+                        <h3>審核場地付款</h3>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">訂單id</th>
+                            <th scope="col">學校</th>
+                            <th scope="col">場地名稱</th>
+                            <th scope="col">租借日期</th>
+                            <th scope="col">開始時間</th>
+                            <th scope="col">結束時間</th>
+                            <th scope="col">總額</th>
+                            <th scope="col">審核通過</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    {% for i in rental_site_set %}
+                    <tr>
+                        <td>{{i.id}}</td>
+                        <td>{{i.school_name}}</td>
+                        <td>{{i.site_name}}</td>
+                        <td>{{i.date}}</td>
+                        <td>{{i.start}}</td>
+                        <td>{{i.end}}</td>
+                        <td>{{i.total_price}}</td>
+                        <td>
+                            <form  action="{% url 'Order_management:status_update_site' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{i.id}}" />
+                            <input type="submit" class='btn' value="已付款"></input>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <div class="row" style="margin-top : 50px ; margin-bottom : 20px; ">
+                    <div class="col-md-12 text-center">
+                        <h3>審核器材付款</h3>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">訂單id</th>
+                        <th scope="col">學校</th>
+                        <th scope="col">器材名稱</th>
+                        <th scope="col">租借日期</th>
+                        <th scope="col">數量</th>
+                        <th scope="col">價格</th>
+                        <th scope="col">狀態</th>
+                        <th scope="col">審核通過</th>
+                    </tr>
+                    </thead>
+                <tbody>
+                    {% for obj in rental_equ_set_0 %}
+                    <tr>
+                        <td>{{obj.id}}</td>
+                        <td>{{obj.date}}</td>
+                        <td>{{obj.school}}</td>
+                        <td>{{obj.name}}</td>
+                        <td>{{obj.number}}</td>
+                        <td>{{obj.price}}</td>
+                        <td>{{obj.status}}</td>
+                        <td>
+                            <form  action="{% url 'Order_management:status_update_equ' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{obj.id}}" />
+                            <input type="submit" class='btn'value="已付款"></input>
+                            </form>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <div class="row" style=" margin-bottom : 20px; ">
+                    <div class="col-md-12 text-center">
+                        <h3>審核器材歸還</h3>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">訂單id</th>
+                            <th scope="col">學校</th>
+                            <th scope="col">器材名稱</th>
+                            <th scope="col">租借日期</th>
+                            <th scope="col">數量</th>
+                            <th scope="col">價格</th>
+                            <th scope="col">狀態</th>
+                            <th scope="col">審核通過</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    {% for obj in rental_equ_set_1 %}
+                    <tr>
+                        <td>{{obj.id}}</td>
+                        <td>{{obj.date}}</td>
+                        <td>{{obj.school}}</td>
+                        <td>{{obj.name}}</td>
+                        <td>{{obj.number}}</td>
+                        <td>{{obj.price}}</td>
+                        <td>{{obj.status}}</td>
+                        <td>
+                            <form  action="{% url 'Order_management:status_return_equ' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{obj.id}}" />
+                            <input type="submit" class='btn'value="已歸還"></input>
+                            </form>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock  %}

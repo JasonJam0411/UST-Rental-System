@@ -51,15 +51,14 @@ def login(request):
                 #一般使用者登入跳轉到home_member.html
                 if identity == 1:
                     return redirect('/rental/search_site/')
+                elif identity == 2:
+                    return redirect('/es_management/home_page/')
                 elif identity == 3:
                     return redirect('/member_management/search_member/')
                 #缺場材管理URL
                 else:
-                    context = {
-                        'successful_submit':True
-                    }
-                    messages.success(request, "場材管理登入成功")
-                    return HttpResponseRedirect(request.path_info)
+                    messages.error(request, "此會員身分錯誤，請聯繫系統管理員")
+                return HttpResponseRedirect(request.path_info)
             else:
                 messages.error(request, "email或密碼輸入錯誤")
                 return HttpResponseRedirect(request.path_info)
@@ -122,7 +121,7 @@ def edit_member_profile(request):
         if(identity == 1):
             context["base_html"] = 'home_member.html'
         elif(identity == 2):
-            context["base_html"] = 'home_member.html'
+            context["base_html"] = 'base_site_equipment_management.html'
         else:
             context["base_html"] = 'base_member_management.html'  
 

@@ -1,0 +1,52 @@
+{% extends 'base_site_equipment_management.html' %}
+
+{% block title %}
+器材管理
+{% endblock %}
+
+{% block content %}
+<section id="site_list" class="container">
+    <div class="d-flex justify-content-end gap-2">
+        <a href="{% url 'ES_management:add_equipment' %}" class="btn btn-danger" role="button">新增器材</a>
+        <a href="{% url 'ES_management:back_to_home_page' %}" class="btn btn-primary" role="button">返回</a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>器材管理</h3>
+                <br>
+            </div>
+        </div>
+        <div class="row">           
+            {% for obj in equ_set %}
+            <div class="col-md-4">
+                <div class="outer">
+                    <div class="upper">
+                        <img src="/media/{{obj.image}}" height="300"  width="300">
+                    </div>
+                    <div class="lower">                          
+                        <h3>{{obj.name}}</h3>
+                        <span>價錢：{{obj.price}} </span>
+                        <br>
+                        <span>數量：{{obj.number}} </span>
+                        <br>
+                        <form  action="{% url 'ES_management:display_edit_equipment' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{obj.id}}" />
+                            <input type="submit" class='btnstyle1' value="修改"></input>
+                        </form>
+                        <form  action="{% url 'ES_management:delete_equipment' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{obj.id}}" />
+                            <input type="submit" class="btnstyle1" value="刪除"></input>
+                        </form>
+
+                    </div>                       
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+</section>
+{% endblock  %}
