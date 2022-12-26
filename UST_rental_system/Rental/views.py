@@ -3,10 +3,12 @@ from Rental.models import Duration, Rent_Site, Rent_Equipment, Equipment
 from Member.models import Member
 from django.db.models import IntegerField, ExpressionWrapper, F, Q, Sum
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
 import datetime
 
 
 #首頁
+@csrf_exempt
 def home_page(request):
     if 'email' not in request.session:
         return redirect('/member/login/')
@@ -14,16 +16,19 @@ def home_page(request):
         return render(request, "home-nu.html")
 
 #回搜尋場地
+@csrf_exempt
 def back_to_search_site(request):
     if request.method == "POST":
         return redirect('/rental/search_site/')
 
 #回搜尋器材
+@csrf_exempt
 def back_to_search_equipment(request):
     if request.method == "POST":
         return redirect('/rental/search_equipment/')
 
 #搜尋場地
+@csrf_exempt
 def search_site(request):
     if 'email' not in request.session:
         return redirect('/member/login/')
@@ -60,6 +65,7 @@ def search_site(request):
         return render(request, "search_site.html")
  
 #顯示欲預約場地
+@csrf_exempt
 def display_reserve_site(request):
     if 'email' not in request.session:
         return redirect('/member/login/')
@@ -80,6 +86,7 @@ def display_reserve_site(request):
 
 
 #確定預約場地
+@csrf_exempt
 def reserve_site(request):
 
     if request.method == "POST":
@@ -117,6 +124,7 @@ def reserve_site(request):
 
 
 #搜尋器材
+@csrf_exempt
 def search_equipment(request):
     if 'email' not in request.session:
         return redirect('/member/login/')
@@ -178,6 +186,7 @@ def search_equipment(request):
 
  
 #顯示欲預約器材
+@csrf_exempt
 def display_reserve_equipment(request):
     if 'email' not in request.session:
         return redirect('/member/login/')
@@ -212,6 +221,7 @@ def display_reserve_equipment(request):
         return render(request, "rent_equipment.html")
 
 #確定預約器材
+@csrf_exempt
 def reserve_equipment(request):
 
     if request.method == "POST":
@@ -266,6 +276,7 @@ def reserve_equipment(request):
 
 
 #目前租借紀錄
+@csrf_exempt
 def current_rental_record(request):
     if 'email' not in request.session:
         return redirect('/member/login/')
@@ -302,6 +313,7 @@ def current_rental_record(request):
         return render(request, "current_rental_record.html", context)
 
 #刪除場地預約
+@csrf_exempt
 def delete_reserve_site(request):
     
     if request.method == "POST":
@@ -322,6 +334,7 @@ def delete_reserve_site(request):
         return current_rental_record(request)
 
 #刪除器材預約
+@csrf_exempt
 def delete_reserve_equipment(request):
     
     if request.method == "POST":
@@ -338,6 +351,7 @@ def delete_reserve_equipment(request):
     return current_rental_record(request)
 
 #歷史租借紀錄
+@csrf_exempt
 def historical_rental_record(request):
     if 'email' not in request.session:
         return redirect('/member/login/')

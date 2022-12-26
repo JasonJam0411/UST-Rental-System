@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.contrib import messages
 
 #顯示預約審核頁面
+@csrf_exempt
 def display_order_management(request):
     return render(request, 'ES_order_management.html')
 
@@ -60,6 +61,7 @@ def status_return_equ(request):
 #----------------------------------------------
 
 #整合顯示
+@csrf_exempt
 def generate_rental(request):
 
     context = {}
@@ -178,6 +180,7 @@ def generate_rental(request):
     
 
 #整合顯示
+@csrf_exempt
 def generate_rental2(request):
 
     context = {}

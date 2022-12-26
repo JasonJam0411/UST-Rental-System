@@ -2,9 +2,11 @@ from django.shortcuts import render
 from Member.models import Member
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 
 # 系統管理員查詢會員資料
+@csrf_exempt
 def search_member(request):
 
     context = {}
@@ -15,6 +17,7 @@ def search_member(request):
     return render(request, 'member_manage.html',context)
 
 #以 email 查詢單筆會員資料
+@csrf_exempt
 def email_search_member(request):
     context = {}
     data = request.POST
@@ -30,6 +33,7 @@ def email_search_member(request):
     return render(request, 'member_manage.html',context)
 
 # 刪除會員
+@csrf_exempt
 def delete_member(request):
     if request.method == "POST":
         member_id = request.POST.get('member_id')

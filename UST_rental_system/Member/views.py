@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 
 #註冊
+@csrf_exempt
 def register(request):
     form = MemberModelForm()
     context = {}
@@ -99,6 +100,7 @@ def login(request):
 
 
 #修改會員資料
+@csrf_exempt
 def edit_member_profile(request):
     if 'email' not in request.session:
         return redirect('/member/login/')
@@ -161,6 +163,7 @@ def edit_member_profile(request):
         return render(request, 'edit_member_profile.html', context)   
 
 #登出
+@csrf_exempt
 def logout(request):
     if request.method == "POST":
         request.session.clear()
