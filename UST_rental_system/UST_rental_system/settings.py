@@ -55,8 +55,10 @@ INSTALLED_APPS = [
     "Rental",
     "ES_management",
     "Order_management",
-    "Member_management"
+    "Member_management",
+    'puml_generator'
 ]
+# 新增"django_extensions" 生成關聯圖
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -67,6 +69,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+# 啟動"appmap.django.Middleware"
+
 
 ROOT_URLCONF = "UST_rental_system.urls"
 
@@ -156,3 +160,12 @@ MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+#生成關聯圖
+# import os
+# os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
+
+# GRAPH_MODELS = {
+#   'all_applications': True,
+#   'group_models': True,
+# }

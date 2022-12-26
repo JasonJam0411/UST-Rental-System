@@ -1,102 +1,123 @@
 {% extends 'base_member_management.html' %}
 
+{% block active1 %} 
+active
+{% endblock %}
 {% block title %}
-會員資料管理
+會員管理
 {% endblock %}
 
 {% block content %}
-    <div class='container'>
-        <div class="row justify-content-center" style="display: flex;   justify-content: center;  align-items: center; ">
-            <form action="{% url 'member_management:email_search_member' %}" method="POST">
-                {% csrf_token %}
-                <div class="form-group mr-sm-3 mb-2">
-                    輸入會員信箱：<input name="email" type="search" class="light-table-filter" style="width: 300px;"/>
-                </div>
-                <input class="btn btn-primary mb-2" id="searchBtn" type="submit" value="搜尋" ></input>
-            </form>
 
-            {% if messages %}
+    <div class="container" style="margin-top:2%">
+        {% if messages %}
             <div class="row">
-            <div class="">
-                {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">
-                    <p>{{ message }}</p>
-                </div>
-                {% endfor %}
-                </div>
-    
-            </div>
-            {% endif %}
-
-        </div>
-    </div>
-        <div class='jumbotron'  style="background-color:#E9E9D8 ; ">
-            <div class="container">
-                <div class="row" style=" margin-bottom : 20px; ">
-                    <div class="col-md-12 text-center">
-                        <h3>會員管理</h3>
+                <div class="">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        <p>{{ message }}</p>
                     </div>
-
-                
-
+                    {% endfor %}
                 </div>
-                <table class="table table-striped">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">姓名</th>
-                        <th scope="col">身分</th>
-                        <th scope="col">性別</th>
-                        <th scope="col">生日</th>
-                        <th scope="col">電話</th>
-                        <th scope="col">信箱</th>
-                        <th scope="col">刪除</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {% for obj in member_set %}
-                        <tr>
-                            
-                                <th>{{obj.id}}</th>
-                                <td>{{obj.name}}</td>
-                                <td>{{obj.identity}}</td>
-                                <td>{{obj.sex}}</td>
-                                <td>{{obj.birthday}}</td>
-                                <td>{{obj.tel}}</td>
-                                <td>{{obj.email}}</td>
-                                <form  action="{% url 'member_management:delete_member' %}" method="POST">
-                                    {% csrf_token %}
-                                <td>
-                                    <input type="hidden" name="member_id" value="{{obj.id}}"/>
-                                    <input class="btnstyle1" type="submit" id="{{obj.id}}" value="刪除"/>
-                                </td>    
-                                </form>                        
-                        </tr>
-                        {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="container shadow-lg p-3 mb-5 bg-white rounded border border-dark border-1">
+        <form action="{% url 'member_management:email_search_member' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" style="font-size: 25px;margin-left:10%">輸入Email搜尋會員</label>
+                <div class="col-sm-4">
+                    <input type="email" class="form-control" name="email" placeholder="Email" style="height: 100%" Required>
+                </div>
+                <div class="col-sm-2">
+                    <input class="btn btn-primary" type="submit" id="searchBtn" value="搜尋" style="font-size: 25px">
+                </div>
+            </div>
+        
+        </form>
+    </div>
+
+    <div class="container shadow-lg p-3 mb-5 bg-white rounded border border-dark border-1">
+        <div class="row" style="margin-top:2%">
+            <h2 style="text-align: center;">管理會員資料</h2>
+        </div>
+            <table class="table table-hover table-bordered" style="margin-top:2%">
+                <thead class="table-dark" style="font-size:20px;">
+                    <tr style="text-align: center;">
+                        <th scope="col" style="width:8%">編號</th>
+                        <th scope="col" style="width:15%">姓名</th>
+                        <th scope="col" style="width:15%">身分</th>
+                        <th scope="col" style="width:15%">信箱</th>
+                        <th scope="col" style="width:8%">性別</th>
+                        <th scope="col" style="width:15%">生日</th>
+                        <th scope="col" style="width:15%">電話</th>
+                        <th scope="col" style="width:15%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in member_set %}
+                    <tr style="font-size:22px;vertical-align: middle;text-align: center;">
+                        <th>{{obj.id}}</th>
+                        <td>{{obj.name}}</td>
+                        <td>
+                            {% if obj.identity == 1 %}
+                                    <button type="button" class="btn btn-success" style="color:black"><b>一般會員</b></button>
+                                {% endif %}
+                                {% if obj.identity == 2 %}
+                                    <button type="button" class="btn btn-warning" style="color:black"><b>場地管理員</b></button>
+                                {% endif %}
+                                {% if obj.identity == 3 %}
+                                    <button type="button" class="btn btn-danger" style="color:black"><b>系統管理員</b></button>
+                                {% endif %}
+                        </td>
+                        <td>{{obj.email}}</td>
+                        <td>{{obj.sex}}</td>
+                        <td>{{obj.birthday|date:"Y-m-d"}}</td>
+                        <td>{{obj.tel}}</td>
+                        <td>
+                            <form  action="{% url 'member_management:delete_member' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="member_id" value="{{obj.id}}" />
+                                <input type="submit" class='btn btn-danger' value="刪除" style="font-size: 20px"></input>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
                     </tbody>       
                     <tbody>
                         {% for obj in one_member_set %}
-                        <tr>
-                            
-                                <th>{{obj.id}}</th>
-                                <td>{{obj.name}}</td>
-                                <td>{{obj.identity}}</td>
-                                <td>{{obj.sex}}</td>
-                                <td>{{obj.birthday}}</td>
-                                <td>{{obj.tel}}</td>
-                                <td>{{obj.email}}</td>
+                        <tr style="font-size:22px;vertical-align: middle;text-align: center;">
+                            <th>{{obj.id}}</th>
+                            <td>{{obj.name}}</td>
+                            <td>
+                                {% if obj.identity == 1 %}
+                                    <button type="button" class="btn btn-success" style="color:black"><b>一般會員</b></button>
+                                {% endif %}
+                                {% if obj.identity == 2 %}
+                                    <button type="button" class="btn btn-warning" style="color:black"><b>場地管理員</b></button>
+                                {% endif %}
+                                {% if obj.identity == 3 %}
+                                    <button type="button" class="btn btn-danger" style="color:black"><b>系統管理員</b></button>
+                                {% endif %}
+                            </td>
+                            <td>{{obj.email}}</td>
+                            <td>{{obj.sex}}</td>
+                            <td>{{obj.birthday|date:"Y-m-d"}}</td>
+                            <td>{{obj.tel}}</td>
+                            <td>
                                 <form  action="{% url 'member_management:delete_member' %}" method="POST">
                                     {% csrf_token %}
-                                <td>
-                                    <input type="hidden" name="member_id" value="{{obj.id}}"/>
-                                    <input class="btnstyle1" type="submit" id="{{obj.id}}" value="刪除"/>
-                                </td>    
-                                </form>                        
+                                    <input type="hidden" name="member_id" value="{{obj.id}}" />
+                                    <input type="submit" class='btn btn-danger' value="刪除" style="font-size: 20px"></input>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
-                    </tbody>                  
+                        </tbody>                  
                 </table>
             </div>
-        </div>
+   
 
 {% endblock  %}

@@ -86,8 +86,7 @@ def login(request):
                         messages.error(request, "此場材管理員帳號未被登記，請聯繫系統管理員!")
                         return HttpResponseRedirect(request.path_info)
                 elif identity == 3:
-                    return redirect('/member_management/search_member/')
-                #缺場材管理URL
+                    return redirect('/member_management/home_page/')
                 else:
                     messages.error(request, "此會員身分錯誤，請聯繫系統管理員")
                     return HttpResponseRedirect(request.path_info)
@@ -105,10 +104,11 @@ def edit_member_profile(request):
     if 'email' not in request.session:
         return redirect('/member/login/')
     else:
+        member_id = request.session.get('id')
+        image = Member.objects.filter(id=member_id).values('image')
         
         if request.method == "POST":
             old_password = request.POST['old_password']
-            member_id = request.session.get('id')
             
             if Member.objects.filter(id=member_id, password=old_password).exists():
                 cellphone = request.POST['cellphone']
@@ -153,12 +153,13 @@ def edit_member_profile(request):
         identity = request.session.get("identity")
         if(identity == 1):
             context["base_html"] = 'base_member.html'
-            context["active_number"] = 'active4'
-
+            context["image"] = image[0]['image']
         elif(identity == 2):
             context["base_html"] = 'base_site_equipment_management.html'
+            context["image"] = image[0]['image']
         else:
-            context["base_html"] = 'base_member_management.html'  
+            context["base_html"] = 'base_member_management.html'
+            context["image"] = image[0]['image']  
 
         return render(request, 'edit_member_profile.html', context)   
 

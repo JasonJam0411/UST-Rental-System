@@ -5,6 +5,12 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 
+@csrf_exempt
+def home_page(request):
+    return render(request, 'home-sm.html')
+
+
+
 # 系統管理員查詢會員資料
 @csrf_exempt
 def search_member(request):
