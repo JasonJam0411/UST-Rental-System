@@ -22,12 +22,12 @@ class AddEquModelForm(forms.ModelForm):
         }
         
         labels = {
-            'name': '器材名稱',
-            'usage': '用途',            
-            'price': '租借價格',
-            'image': '器材圖片',
-            'number': '數量',
-            'rule':'租借規則 (至少20字)',
+            'name': '器材名稱*',
+            'usage': '用途*',            
+            'price': '租借價格*',
+            'image': '器材圖片*',
+            'number': '數量*',
+            'rule':'租借規則* (至少20字)',
             'department_id':'單位'
         }
 
@@ -53,13 +53,13 @@ class AddSiteModelForm(forms.ModelForm):
         }
 
         labels = {
-            'name': '場地名稱',
-            'usage': '用途',
-            'address': '學校地址',
-            'location': '地點',
-            'price': '租借價格',
-            'image': '場地圖片',
-            'rule': '租借規則 (至少20字)',
+            'name': '場地名稱*',
+            'usage': '用途*',
+            'address': '學校地址*',
+            'location': '地點*',
+            'price': '租借價格*',
+            'image': '場地圖片*',
+            'rule': '租借規則* (至少20字)',
             'department_id': '單位'
         }
 
@@ -85,13 +85,13 @@ class UpdateSiteForm(forms.ModelForm):
         }
         
         labels = {
-            'name': '場地名稱',
-            'usage': '用途',
-            'address':'完整地址',
-            'location':'地點',
-            'price': '租借價格',
-            'image': '場地圖片',
-            'rule': '租借規則',
+            'name': '場地名稱*',
+            'usage': '用途*',
+            'address':'學校地址*',
+            'location':'地點*',
+            'price': '租借價格*',
+            'image': '場地圖片*',
+            'rule': '租借規則* (至少20字)',
         }
 
 class UpdateEquForm(forms.ModelForm):
@@ -113,10 +113,10 @@ class UpdateEquForm(forms.ModelForm):
         }
         
         labels = {
-            'name': '器材名稱',
-            'usage': '用途',
-            'price': '租借價格',
-            'image': '器材圖片',
-            'number': '數量',
-            'rule': '租借規則',
+            'name': '器材名稱*',
+            'usage': '用途*',
+            'price': '租借價格*',
+            'image': '器材圖片*',
+            'number': '數量*',
+            'rule': '租借規則* (至少20字)',
         }

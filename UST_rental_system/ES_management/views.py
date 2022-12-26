@@ -218,7 +218,7 @@ def add_equipment(request):
                     messages.error(request,"重複器材名稱，請重新輸入")
                     return HttpResponseRedirect(request.path_info)           
                 elif(len(rule)<20):   
-                    messages.error(request,"場地租借規則需要至少20字!")    
+                    messages.error(request,"器材租借規則需要至少20字!")    
                     return HttpResponseRedirect(request.path_info)   
                 else:         
                 #messages.success(request,"新增成功")

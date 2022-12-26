@@ -25,15 +25,15 @@ class MemberModelForm(forms.ModelForm):
         }
         
         labels = {
-            'email': '電子信箱',
-            'password': '密碼',
-            'name': '姓名',
-            'school_id': '所屬學校',
+            'email': '電子信箱*',
+            'password': '密碼* (需要大於8碼)',
+            'name': '姓名*',
+            'school_id': '所屬學校*',
             'identity': '身份 (僅開放一般使用者)',
-            'sex': '性別',
-            'birthday': '生日',
-            'tel': '聯絡電話',
-            'image': '個人照片(近三個月)',
+            'sex': '性別*',
+            'birthday': '生日*',
+            'tel': '聯絡電話* (格式:09開頭+8碼)',
+            'image': '個人照片* (近三個月)',
         }
 
 
