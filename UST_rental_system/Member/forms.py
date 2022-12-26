@@ -8,7 +8,7 @@ class MemberModelForm(forms.ModelForm):
         fields = ('email','password', 'name', 'school_id','identity','sex','birthday','tel','image')
         
         #choices
-        identity_choices = [('1','一般會員'), ('2','場材管理員'),('3','系統管理員')]
+        identity_choices = [('1','一般會員')]
         gender_choices=[('1','男'), ('2','女')]
 
         widgets = {
@@ -29,7 +29,7 @@ class MemberModelForm(forms.ModelForm):
             'password': '密碼',
             'name': '姓名',
             'school_id': '所屬學校',
-            'identity': '身份',
+            'identity': '身份 (僅開放一般使用者)',
             'sex': '性別',
             'birthday': '生日',
             'tel': '聯絡電話',

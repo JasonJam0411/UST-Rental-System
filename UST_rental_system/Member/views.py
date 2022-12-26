@@ -12,12 +12,38 @@ def register(request):
     if request.method == "POST":
         form = MemberModelForm(request.POST, request.FILES)
         if form.is_valid():
-            # email = form.cleaned_data['email']
-            # print(email)
-            form.save()
-            context['successful_submit']=True
-            #return redirect('register')
+            #確認密碼
+            password = form.cleaned_data['password']
+            check_password = request.POST['check_password']
+            #確認email沒有重複
+            email = form.cleaned_data['email']
+            #確認電話號碼格式正確
+            cellphone = form.cleaned_data['tel']
+            
+            if(password != check_password):
+                messages.error(request, "密碼與確認密碼不一置，請重新輸入")
+                return HttpResponseRedirect(request.path_info)
+            elif(Member.filter(email=email).exists()):
+                messages.error(request, "此帳號已存在，請輸入其他Email進行註冊")
+                return HttpResponseRedirect(request.path_info)
+            elif(len(password)<8):
+                messages.error(request, "密碼長度需要大於8")
+                return HttpResponseRedirect(request.path_info)
+            elif(len(cellphone) != 10):
+                messages.error(request, "輸入手機號碼長度錯誤! (格式: 09開頭+8位數字)")
+                return HttpResponseRedirect(request.path_info)
+            elif(cellphone[0:2] != '09'):
+                messages.error(request, "輸入手機號碼格式錯誤! (格式: 09開頭+8位數字)")
+                return HttpResponseRedirect(request.path_info)          
+            else:
+                heck_cellphone = ['0','1','2','3','4','5','6','7','8','9']
+                for char in cellphone:
+                    if(char not in heck_cellphone):
+                        messages.error(request, "輸入手機號碼格式錯誤! (格式: 09開頭+8位數字)")
+                        return HttpResponseRedirect(request.path_info)
     
+                form.save()
+                context['successful_submit']=True
     context['form']=form
 
     return render(request, 'register.html', context)
@@ -81,7 +107,7 @@ def edit_member_profile(request):
                 cellphone = request.POST['cellphone']
                 new_password = request.POST['new_password']
                 if(len(cellphone) != 0):
-                    if(len(cellphone) < 10):
+                    if(len(cellphone) != 10):
                         messages.error(request, "輸入手機號碼長度錯誤! (格式: 09開頭+8位數字)")
                         return HttpResponseRedirect(request.path_info)
                     elif(cellphone[0:2] != '09'):
