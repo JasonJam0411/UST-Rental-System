@@ -55,10 +55,10 @@ INSTALLED_APPS = [
     "Rental",
     "ES_management",
     "Order_management",
-    "Member_management",
-    'puml_generator'
+    "Member_management"
 ]
 # 新增"django_extensions" 生成關聯圖
+#'puml_generator' MAPapp
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
