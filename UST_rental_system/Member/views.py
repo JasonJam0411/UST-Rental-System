@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .forms import MemberModelForm, LoginModelForm
 from .models import Member
+from Member_management.models import Department
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 
@@ -78,13 +79,17 @@ def login(request):
                 if identity == 1:
                     return redirect('/rental/home_page/')
                 elif identity == 2:
-                    return redirect('/es_management/home_page/')
+                    if Department.objects.filter(email=email).exists():
+                        return redirect('/es_management/home_page/')
+                    else:
+                        messages.error(request, "此場材管理員帳號未被登記，請聯繫系統管理員!")
+                        return HttpResponseRedirect(request.path_info)
                 elif identity == 3:
                     return redirect('/member_management/search_member/')
                 #缺場材管理URL
                 else:
                     messages.error(request, "此會員身分錯誤，請聯繫系統管理員")
-                return HttpResponseRedirect(request.path_info)
+                    return HttpResponseRedirect(request.path_info)
             else:
                 messages.error(request, "email或密碼輸入錯誤")
                 return HttpResponseRedirect(request.path_info)
