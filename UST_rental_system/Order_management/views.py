@@ -47,11 +47,11 @@ def status_return_equ(request):
         data = request.POST
         rent_equ_id = data.get('id') #訂單id
 
-        equ_number = Rent_Equipment.objects.get(id=rent_equ_id).number #要加回去的數量
-        equ_id = Rent_Equipment.objects.get(id=rent_equ_id).equipment_id.id #哪個器材
-        old_number = Equipment.objects.get(id=equ_id).number #器材原始數量
+        # equ_number = Rent_Equipment.objects.get(id=rent_equ_id).number #要加回去的數量
+        # equ_id = Rent_Equipment.objects.get(id=rent_equ_id).equipment_id.id #哪個器材
+        # old_number = Equipment.objects.get(id=equ_id).number #器材原始數量
         Rent_Equipment.objects.filter(id=rent_equ_id).update(status='2') #狀態修改成2(歸還)
-        Equipment.objects.filter(id=equ_id).update(number=old_number+equ_number) #加上歸還數量
+        # Equipment.objects.filter(id=equ_id).update(number=old_number+equ_number) #加上歸還數量
         return HttpResponseRedirect(reverse('Order_management:generate_rental2'))
 
     #return JsonResponse(data={'msg':'update object success.'},status=200)
