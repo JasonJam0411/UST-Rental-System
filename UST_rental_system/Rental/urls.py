@@ -3,6 +3,7 @@ from . import views
 
 app_name = 'rental'
 urlpatterns = [
+    path('home_page/', views.home_page, name='home_page'),
     path('search_site/', views.search_site, name='search_site'),
     path('display_reserve_site/', views.display_reserve_site, name='display_reserve_site'),
     path('reserve_site/', views.reserve_site, name='reserve_site'),

@@ -5,6 +5,14 @@ from django.db.models import IntegerField, ExpressionWrapper, F, Q, Sum
 from django.contrib import messages
 import datetime
 
+
+#首頁
+def home_page(request):
+    if 'email' not in request.session:
+        return redirect('/member/login/')
+    else:
+        return render(request, "home-nu.html")
+
 #回搜尋場地
 def back_to_search_site(request):
     if request.method == "POST":

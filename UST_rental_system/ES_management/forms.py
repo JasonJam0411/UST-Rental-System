@@ -14,18 +14,18 @@ class AddEquModelForm(forms.ModelForm):
         widgets = {
             'name':forms.TextInput(attrs={'class': 'form-control'}),
             'usage': forms.Select(choices=(usage_choices), attrs={'class': 'form-select'}),
-            'price': forms.NumberInput(attrs={'min':'10'}),
-            'image': forms.FileInput(attrs={'class': 'form-control-file'}), 
-            'number': forms.NumberInput(attrs={'min':'1'}), 
+            'price': forms.NumberInput(attrs={'min':'10', 'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}), 
+            'number': forms.NumberInput(attrs={'min':'1', 'class': 'form-control'}), 
             'rule': forms.Textarea(attrs={'class': 'form-control'}),
             'department_id': forms.NumberInput(attrs={'min':'1'}),
         }
         
         labels = {
-            'name': '名稱',
+            'name': '器材名稱',
             'usage': '用途',            
-            'price': '價格',
-            'image': '圖片',
+            'price': '租借價格',
+            'image': '器材圖片',
             'number': '數量',
             'rule':'租借規則',
             'department_id':'單位'
@@ -45,7 +45,7 @@ class AddSiteModelForm(forms.ModelForm):
             'usage': forms.Select(choices=(usage_choices), attrs={'class': 'form-select'}),
             'address':forms.TextInput(attrs={'class': 'form-control'}),
             'location':forms.TextInput(attrs={'class': 'form-control'}),
-            'price': forms.NumberInput(attrs={'min':'1'}),
+            'price': forms.NumberInput(attrs={'min':'1', 'class': 'form-control'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'rule': forms.Textarea(attrs={'class': 'form-control'}),
             'department_id': forms.NumberInput(attrs={'min':'1'}),
@@ -53,12 +53,12 @@ class AddSiteModelForm(forms.ModelForm):
         }
 
         labels = {
-            'name': '名稱',
+            'name': '場地名稱',
             'usage': '用途',
-            'address': '地址',
+            'address': '完整地址',
             'location': '地點',
-            'price': '價格',
-            'image': '租借圖片',
+            'price': '租借價格',
+            'image': '場地圖片',
             'rule': '租借規則',
             'department_id': '單位'
         }
@@ -78,19 +78,19 @@ class UpdateSiteForm(forms.ModelForm):
             'usage': forms.Select(choices=(usage_choices), attrs={'class': 'form-select'}),
             'address':forms.TextInput(attrs={'class': 'form-control'}),
             'location':forms.TextInput(attrs={'class': 'form-control'}),
-            'price': forms.NumberInput(attrs={'min':'10'}),
+            'price': forms.NumberInput(attrs={'min':'10', 'class': 'form-control'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'rule':forms.Textarea(attrs={'class': 'form-control'}),
             
         }
         
         labels = {
-            'name': '名稱',
+            'name': '場地名稱',
             'usage': '用途',
-            'address':'地址',
+            'address':'完整地址',
             'location':'地點',
-            'price': '價格',
-            'image': '圖片',
+            'price': '租借價格',
+            'image': '場地圖片',
             'rule': '租借規則',
         }
 
@@ -106,17 +106,17 @@ class UpdateEquForm(forms.ModelForm):
         widgets = {
             'name':forms.TextInput(attrs={'class': 'form-control'}),
             'usage': forms.Select(choices=(usage_choices), attrs={'class': 'form-select'}),
-            'price': forms.NumberInput(attrs={'min': '10'}),
+            'price': forms.NumberInput(attrs={'min': '10', 'class': 'form-control'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
-            'number': forms.NumberInput(attrs={'min': '1'}),
+            'number': forms.NumberInput(attrs={'min': '1', 'class': 'form-control'}),
             'rule':forms.Textarea(attrs={'class': 'form-control'}),
         }
         
         labels = {
-            'name': '名稱',
+            'name': '器材名稱',
             'usage': '用途',
-            'price': '價格',
-            'image': '圖片',
+            'price': '租借價格',
+            'image': '器材圖片',
             'number': '數量',
             'rule': '租借規則',
         }

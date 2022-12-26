@@ -25,10 +25,16 @@ def site_management(request):
     
         result = Site.objects.filter(
             department_id__email = se_manager_email #在 Site Table 抓該 Email 管理的場地 id 
-        )
+        ).order_by('usage')
     
-        return_data = result.values('id','name','price','image') #取要回傳回去的值
-        context["site_set"] = list(return_data)
+        return_data = result.values('id','name', 'usage', 'price', 'rule', 'image', 'address', 'location') #取要回傳回去的值
+
+        #檢查
+        if len(list(return_data)) == 0:
+            context['site_set'] = False
+        else:
+            context['site_set'] = list(return_data)
+
         return render(request, 'site_management.html',context)
 
 #新增場地
@@ -141,9 +147,14 @@ def equipment_management(request):
             department_id__email = se_manager_email  #在 Equipment Table 抓該 Email 管理的器材 id 
         )
 
-        return_data = result.values('id','name','price','number','image') #取要回傳回去的值
+        return_data = result.values('id','name','price','number','image', 'usage', 'rule') #取要回傳回去的值
 
-        context["equ_set"] = list(return_data)
+        #檢查
+        if len(list(return_data)) == 0:
+            context['equ_set'] = False
+        else:
+            context['equ_set'] = list(return_data)
+
         return render(request, 'equipment_management.html',context)
 
 #新增器材

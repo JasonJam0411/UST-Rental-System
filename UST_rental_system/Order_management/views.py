@@ -153,9 +153,22 @@ def generate_rental(request):
             }
             return_data_list_site += [return_data2]
 
-        context["rental_site_set"] = return_data_list_site
-        context["rental_equ_set_0"] = return_data_list_equ_0
-        context["rental_equ_set_1"] = return_data_list_equ_1
+        #檢查有無紀錄
+        if not return_data_list_site:
+            context['rental_site_set'] = False
+        else:
+            context['rental_site_set'] = return_data_list_site  
+
+        if not return_data_list_equ_0:
+            context['rental_equ_set_0'] = False
+        else:
+            context['rental_equ_set_0'] = return_data_list_equ_0 
+
+        if not return_data_list_equ_1:
+            context['rental_equ_set_1'] = False
+        else:
+            context['rental_equ_set_1'] = return_data_list_equ_1 
+
         return render(request, 'ES_order_management.html', context)
     
     else:

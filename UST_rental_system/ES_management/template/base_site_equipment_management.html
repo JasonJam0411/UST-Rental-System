@@ -19,31 +19,27 @@
 
   <body>
     <header>
-        <div class='container'>
-            <nav class="navbar navbar-expand-lg ">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'ES_management:home_page' %}" >
-                    <img src="{% static 'UST_pictures/ust_logo.png' %}" style="width: 100px; height: 100px; ">
+                    <img src="{% static 'UST_pictures/UST.png' %}" style="width: 100px; height: 100px; ">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page"  href="{% url 'ES_management:home_page' %}">主頁</a>
+                        <a class="nav-link {% block active1 %} {% endblock %}" aria-current="page"  href="{% url 'ES_management:home_page' %}">首頁</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'Order_management:display_order_management' %}">審核訂單</a>
+                        <a class="nav-link {% block active2 %} {% endblock %}" href="{% url 'Order_management:display_order_management' %}">審核訂單</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'ES_management:site_management' %}">場地管理</a>
+                        <a class="nav-link {% block active3 %} {% endblock %}" href="{% url 'ES_management:site_management' %}">場地管理</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'ES_management:equipment_management' %}">器材管理</a>
+                        <a class="nav-link {% block active4 %} {% endblock %}" href="{% url 'ES_management:equipment_management' %}">器材管理</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                        <a class="nav-link dropdown-toggle {% block active5 %} {% endblock %}" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                           會員中心
                         </a>
                         <ul class="dropdown-menu">
@@ -51,14 +47,16 @@
                         </ul>
                     </li>
                     </ul>
+                    <h2><span class="badge bg-warning" style="color:black">場材管理者</span></h2>
+                    <h3 style="color:white;margin-left:2%;" >{{ request.session.name }}</h3>
+                    <h3 style="color:white;margin-left:2%;" > 您好</h3>
+                    <p style="right: 0px; margin-left:5%;  font-size:20px ;color:white" ></p>
+                    <form  class="d-flex" action="{% url 'member:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <input class="btn btn-danger" type="submit" value="登出" style="font-size : 25px; width: 150%; height: 50%;"/>
+                    </form>
                 </div>
-                <p style="right: 0px; margin-top: 22px;  font-size:20px ;" >{{ request.session.name }} 場材管理者你好</p>
-                <form  action="{% url 'member:logout' %}" method="POST">
-                    {% csrf_token %}
-                    <input class="btn btn-danger" type="submit" value="登出" />
-                </form>
             </nav>
-        </div>
     </header>
 
     {% block content %}

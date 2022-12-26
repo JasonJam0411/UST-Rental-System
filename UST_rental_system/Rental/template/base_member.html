@@ -26,6 +26,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left:2%">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
+                        <a class="nav-link {% block active5 %} {% endblock %}" aria-current="page"  href="{% url 'rental:home_page' %}">首頁</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% block active1 %} {% endblock %}" aria-current="page"  href="{% url 'rental:search_site' %}">預約場地</a>
                     </li>
                     <li class="nav-item">

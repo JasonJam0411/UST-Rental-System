@@ -50,7 +50,7 @@ def login(request):
                 
                 #一般使用者登入跳轉到home_member.html
                 if identity == 1:
-                    return redirect('/rental/search_site/')
+                    return redirect('/rental/home_page/')
                 elif identity == 2:
                     return redirect('/es_management/home_page/')
                 elif identity == 3:
