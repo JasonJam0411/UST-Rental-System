@@ -25,7 +25,7 @@ def register(request):
             if(password != check_password):
                 messages.error(request, "密碼與確認密碼不一置，請重新輸入")
                 return HttpResponseRedirect(request.path_info)
-            elif(Member.filter(email=email).exists()):
+            elif(Member.objects.filter(email=email).exists()):
                 messages.error(request, "此帳號已存在，請輸入其他Email進行註冊")
                 return HttpResponseRedirect(request.path_info)
             elif(len(password)<8):
