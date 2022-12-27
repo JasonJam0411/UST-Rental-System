@@ -9,7 +9,7 @@ class MemberModelForm(forms.ModelForm):
         
         #choices
         identity_choices = [('1','一般會員')]
-        gender_choices=[('1','男'), ('2','女')]
+        gender_choices=[('男','男'), ('女','女')]
 
         widgets = {
             'email':forms.EmailInput(attrs={'class': 'form-control'}),
