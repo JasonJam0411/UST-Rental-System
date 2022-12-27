@@ -160,14 +160,18 @@ def edit_site(request):
 def delete_site(request):
 
     if request.method == "POST":
-        site_id = request.POST.get('id')
-        data = Site.objects.get(id=site_id) 
-
-        if Duration.objects.filter(site_id=site_id,rent_status=1):
-            messages.error(request, "該場地正被租借中，不可被刪除")
-            return site_management(request)
-        else:
-            data.delete()   
+        id = request.POST.get('id')
+        
+        if(Site.objects.filter(id=id).exists()):
+            data = Site.objects.get(id=id) 
+            data_id = Site.objects.get(id=id).id
+            if Duration.objects.filter(site_id=data_id,rent_status=1):
+                messages.error(request, "該場地正被租借中，不可被刪除")
+                return site_management(request)
+            else:
+                data.delete()   
+                return site_management(request)
+        else:                  
             return site_management(request)
 
 
@@ -278,14 +282,18 @@ def edit_equipment(request):
 def delete_equipment(request):
 
     if request.method == "POST":
-
         id = request.POST.get('id')
-        data = Equipment.objects.get(id=id)
-        data_id = Equipment.objects.get(id=id).id
+        if(Equipment.objects.filter(id=id).exists()):
+            #重整不會報錯
+            data = Equipment.objects.get(id=id)
+            data_id = Equipment.objects.get(id=id).id
 
-        if Rent_Equipment.objects.filter(equipment_id=data_id) & Rent_Equipment.objects.filter( status = 1):
-            messages.error(request, "該器材正被租借中，不可被刪除")
-            return equipment_management(request)
-        else:
-            data.delete()       
+            if Rent_Equipment.objects.filter(equipment_id=data_id) & Rent_Equipment.objects.filter( status = 1):
+                messages.error(request, "該器材正被租借中，不可被刪除")
+                return equipment_management(request)
+            else:
+                data.delete()       
+                return equipment_management(request)
+            #重整不會報錯
+        else:                  
             return equipment_management(request)
