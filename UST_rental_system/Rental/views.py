@@ -58,10 +58,11 @@ def search_site(request):
                     end__gte = end_first,
                     end__lte = end
                 )
-
-            context["condition_query_set"] = result
+            if not result:
+                context['no_result'] = True
+            else:
+                context['condition_query_set'] = result
             return render(request, "search_site.html", context)
-
         return render(request, "search_site.html")
  
 #顯示欲預約場地
@@ -180,6 +181,7 @@ def search_equipment(request):
 
             context["condition_query_set"] = result
             context["not_rented_equipment"] = not_rented_equipment
+            
             return render(request, "search_equipment.html", context)
 
         return render(request, "search_equipment.html")
