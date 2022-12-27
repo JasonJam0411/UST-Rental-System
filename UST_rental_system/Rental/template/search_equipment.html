@@ -99,7 +99,7 @@ active
                         <div class="col-3">
                             <div class="card" style="width: 80%;">
                                 <div class="card-header text-center">
-                                    <img src=/static/{{ obj.equipment_id__image }} height="45%"  width="60%">
+                                    <img src=/media/{{ obj.equipment_id__image }} height="45%"  width="60%">
                                 </div>
                                 <div class="card-body" style="margin-left : 2%">
                                     <h1 class="card-title  text-center" style="margin-bottom:10%">{{ obj.equipment_id__name }}</h1>
@@ -145,7 +145,7 @@ active
                 {% if forloop.counter|divisibleby:4 %}</div><div class="row" style="margin-top : 5%">{% endif %}
             {% endfor %}
 
-            
+
         </div>
     </div>
     <!--顯示可預約器材 END-->
