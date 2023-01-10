@@ -39,7 +39,7 @@ SECRET_KEY = "django-insecure-v)rxb6t02p!v)nvgs-!2ea2p3ss=d)af#%2ge@656#-c37wl2)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -107,7 +107,7 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ust_rental_system_final', # 資料庫名字
+        'NAME': 'UST_final_demo_final', # 資料庫名字
         'USER': "root",  # mysql 使用者名稱稱
         'PASSWORD': 'Aa980411',  # 資料庫的密碼
         'HOST': "127.0.0.1",  # 資料庫服務地址， 這裡我們是測試開發 填本地地址 

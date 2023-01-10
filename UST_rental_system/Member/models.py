@@ -18,7 +18,6 @@ class School(models.Model):
         db_table = 'school'
         managed=False
 
-
 class Member(models.Model):
     id = models.IntegerField(db_column='id', primary_key=True)
     name = models.CharField(db_column='name', max_length=45)
