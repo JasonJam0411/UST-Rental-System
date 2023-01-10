@@ -109,7 +109,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'UST_final_demo_final', # 資料庫名字
         'USER': "root",  # mysql 使用者名稱稱
-        'PASSWORD': 'Aa980411',  # 資料庫的密碼
+        'PASSWORD': '',  # 資料庫的密碼
         'HOST': "127.0.0.1",  # 資料庫服務地址， 這裡我們是測試開發 填本地地址 
         'PORT': 3306,   # mysql 對應的埠號 
         'default-character-set': "UTF8",  # 設定編碼規則 utf8
